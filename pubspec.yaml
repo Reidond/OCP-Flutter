@@ -1,0 +1,24 @@
+name: open_copyright_platform
+description: A new Flutter project.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+  bloc: ^0.9.0
+  flutter_bloc: ^0.7.0
+  meta: ^1.1.6
+  equatable: ^0.2.0
+  user_repository:
+    path: user_repository
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
