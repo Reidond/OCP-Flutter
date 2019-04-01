@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:user_repository/user_repository.dart';
 
 import 'package:open_copyright_platform/authentication/index.dart';
+import 'package:open_copyright_platform/register/index.dart';
 import 'package:open_copyright_platform/splash/index.dart';
 import 'package:open_copyright_platform/login/index.dart';
 import 'package:open_copyright_platform/home/index.dart';
 import 'package:open_copyright_platform/common/index.dart';
+import 'package:rails_api_connection/rails_api_connection.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
   void onTransition(Transition transition) {
     print(transition);
+  }
+
+  @override
+  void onError(Object error, StackTrace stacktrace) {
+    print(error);
   }
 }
 
@@ -28,49 +34,56 @@ class App extends StatefulWidget {
   App({Key key, @required this.userRepository}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _AppState();
-  }
+  State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  AuthenticationBloc authenticationBloc;
-  UserRepository get userRepository => widget.userRepository;
+  AuthenticationBloc _authenticationBloc;
+  UserRepository get _userRepository => widget.userRepository;
 
   @override
   void initState() {
-    authenticationBloc = AuthenticationBloc(userRepository: userRepository);
-    authenticationBloc.dispatch(AppStarted());
+    _authenticationBloc = AuthenticationBloc(userRepository: _userRepository);
+    _authenticationBloc.dispatch(AppStarted());
     super.initState();
   }
 
   @override
   void dispose() {
-    authenticationBloc.dispose();
+    _authenticationBloc.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthenticationBloc>(
-        bloc: authenticationBloc,
-        child: MaterialApp(
-            home: BlocBuilder<AuthenticationEvent, AuthenticationState>(
-          bloc: authenticationBloc,
+      bloc: _authenticationBloc,
+      child: MaterialApp(
+        title: 'Open Copyright Platform',
+        theme: ThemeData.light(),
+        home: BlocBuilder<AuthenticationEvent, AuthenticationState>(
+          bloc: _authenticationBloc,
           builder: (BuildContext context, AuthenticationState state) {
-            if (state is AuthenticationUnauthenticated) {
+            if (state is AuthenticationUninitialized) {
               return SplashPage();
             }
             if (state is AuthenticationAuthenticated) {
               return HomePage();
             }
             if (state is AuthenticationUnauthenticated) {
-              return LoginPage(userRepository: userRepository);
+              return LoginPage(userRepository: _userRepository);
+            }
+            if (state is AuthenticationUnregistered) {
+              return RegisterPage(
+                userRepository: _userRepository,
+              );
             }
             if (state is AuthenticationLoading) {
               return LoadingIndicator();
             }
           },
-        )));
+        ),
+      ),
+    );
   }
 }

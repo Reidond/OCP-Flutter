@@ -3,38 +3,40 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:open_copyright_platform/authentication/index.dart';
 import 'package:open_copyright_platform/login/index.dart';
+import 'package:open_copyright_platform/register/index.dart';
 
-class LoginForm extends StatefulWidget {
-  final LoginBloc loginBloc;
+class RegisterForm extends StatefulWidget {
+  final RegisterBloc registerBloc;
   final AuthenticationBloc authenticationBloc;
 
-  LoginForm({
+  RegisterForm({
     Key key,
-    @required this.loginBloc,
+    @required this.registerBloc,
     @required this.authenticationBloc,
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _LoginFormState();
+    return _RegisterFormState();
   }
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _RegisterFormState extends State<RegisterForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _passwordConfirmationController = TextEditingController();
 
-  LoginBloc get _loginBloc => widget.loginBloc;
+  RegisterBloc get _registerBloc => widget.registerBloc;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginEvent, LoginState>(
-        bloc: _loginBloc,
+    return BlocBuilder<RegisterEvent, RegisterState>(
+        bloc: _registerBloc,
         builder: (
           BuildContext context,
-          LoginState state,
+          RegisterState state,
         ) {
-          if (state is LoginFailure) {
+          if (state is RegisterFailure) {
             _onWidgetDidBuild(() {
               Scaffold.of(context).showSnackBar(
                 SnackBar(
@@ -45,8 +47,9 @@ class _LoginFormState extends State<LoginForm> {
             });
           }
 
-          _emailController.text = 'customer1@test.com';
+          _emailController.text = 'customer3@test.com';
           _passwordController.text = 'customer123';
+          _passwordConfirmationController.text = 'customer123';
 
           return Form(
             child: ListView(
@@ -55,6 +58,7 @@ class _LoginFormState extends State<LoginForm> {
                 SizedBox(height: 80.0),
                 Column(
                   children: <Widget>[
+                    // TODO: Make this check better
                     Theme.of(context).backgroundColor ==
                             ThemeData.light().backgroundColor
                         ? Image.asset('assets/logo.png')
@@ -70,38 +74,47 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   controller: _emailController,
                 ),
-// spacer
                 SizedBox(height: 12.0),
-// [Password]
                 TextField(
                   decoration: new InputDecoration(
                     labelText: "Password",
                     fillColor: Colors.blue,
                     border: new OutlineInputBorder(),
-                    //fillColor: Colors.green
                   ),
                   controller: _passwordController,
+                  obscureText: true,
+                ),
+                SizedBox(height: 12.0),
+                TextField(
+                  decoration: new InputDecoration(
+                    labelText: "Password confirmation",
+                    fillColor: Colors.blue,
+                    border: new OutlineInputBorder(),
+                    //fillColor: Colors.green
+                  ),
+                  controller: _passwordConfirmationController,
                   obscureText: true,
                 ),
                 ButtonBar(
                   children: <Widget>[
                     FlatButton(
-                      child: Text('Register'),
-                      onPressed: state is! LoginLoading
-                          ? _onRegisterButtonPressed
+                      child: Text('Log In'),
+                      onPressed: state is! RegisterLoading
+                          ? _onRegisterLoginButtonPressed
                           : null,
                     ),
                     RaisedButton(
-                      child: Text('Log In'),
-                      onPressed:
-                          state is! LoginLoading ? _onLoginButtonPressed : null,
+                      child: Text('Register'),
+                      onPressed: state is! RegisterLoading
+                          ? _onRegisterButtonPressed
+                          : null,
                     ),
                   ],
                 ),
                 Stack(
                   children: <Widget>[
                     Center(
-                      child: state is LoginLoading
+                      child: state is RegisterLoading
                           ? CircularProgressIndicator()
                           : null,
                     )
@@ -119,14 +132,15 @@ class _LoginFormState extends State<LoginForm> {
     });
   }
 
-  _onLoginButtonPressed() {
-    _loginBloc.dispatch(LoginButtonPressed(
+  _onRegisterButtonPressed() {
+    _registerBloc.dispatch(RegisterButtonPressed(
       email: _emailController.text,
       password: _passwordController.text,
+      passwordConfirmation: _passwordConfirmationController.text,
     ));
   }
 
-  _onRegisterButtonPressed() {
-    _loginBloc.dispatch(LoginRegisterButtonPressed());
+  _onRegisterLoginButtonPressed() {
+    _registerBloc.dispatch(RegisterLoginButtonPressed());
   }
 }

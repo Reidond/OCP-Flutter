@@ -4,23 +4,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
 import 'package:open_copyright_platform/authentication/index.dart';
-import 'package:open_copyright_platform/login/index.dart';
+import 'package:open_copyright_platform/register/index.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final UserRepository userRepository;
 
-  LoginPage({Key key, @required this.userRepository})
+  RegisterPage({Key key, @required this.userRepository})
       : assert(userRepository != null),
         super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _LoginPageState();
+    return _RegisterPageState();
   }
 }
 
-class _LoginPageState extends State<LoginPage> {
-  LoginBloc _loginBloc;
+class _RegisterPageState extends State<RegisterPage> {
+  RegisterBloc _registerBloc;
   AuthenticationBloc _authenticationBloc;
 
   UserRepository get _userRepository => widget.userRepository;
@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
-    _loginBloc = LoginBloc(
+    _registerBloc = RegisterBloc(
       userRepository: _userRepository,
       authenticationBloc: _authenticationBloc,
     );
@@ -38,16 +38,16 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LoginForm(
+      body: RegisterForm(
         authenticationBloc: _authenticationBloc,
-        loginBloc: _loginBloc,
+        registerBloc: _registerBloc,
       ),
     );
   }
 
   @override
   void dispose() {
-    _loginBloc.dispose();
+    _registerBloc.dispose();
     super.dispose();
   }
 }

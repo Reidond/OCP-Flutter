@@ -1,7 +1,6 @@
-import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
-import 'package:open_copyright_platform/authentication/index.dart';
+import 'package:rails_api_connection/rails_api_connection.dart';
 
 abstract class AuthenticationEvent extends Equatable {
   AuthenticationEvent([List props = const []]) : super(props);
@@ -13,13 +12,42 @@ class AppStarted extends AuthenticationEvent {
 }
 
 class LoggedIn extends AuthenticationEvent {
-  final String token;
+  final User user;
 
-  LoggedIn({@required this.token}) : super([token]);
+  LoggedIn({@required this.user}) : super([user]);
 
   @override
   String toString() {
-    return 'LoggedIn {token: $token}';
+    return 'LoggedIn {headers: ${user.userHeaders}, body: ${user.userBody}}';
+  }
+}
+
+class RegisteredIn extends AuthenticationEvent {
+  final User user;
+
+  RegisteredIn({@required this.user}) : super([user]);
+
+  @override
+  String toString() {
+    return 'RegisteredIn {headers: ${user.userHeaders}, body: ${user.userBody}}';
+  }
+}
+
+class RegisterButtonPress extends AuthenticationEvent {
+  RegisterButtonPress() : super();
+
+  @override
+  String toString() {
+    return 'RegisterButtonPress';
+  }
+}
+
+class LoginButtonPress extends AuthenticationEvent {
+  LoginButtonPress() : super();
+
+  @override
+  String toString() {
+    return 'LoginButtonPress';
   }
 }
 
