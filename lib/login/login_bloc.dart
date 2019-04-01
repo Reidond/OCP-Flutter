@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:user_repository/user_repository.dart';
 import 'package:open_copyright_platform/authentication/index.dart';
 import 'package:open_copyright_platform/login/index.dart';
+import 'package:open_copyright_platform/register/index.dart';
+import 'package:rails_api_connection/rails_api_connection.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
@@ -25,16 +26,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginLoading();
 
       try {
-        final token = await userRepository.authenticate(
-          username: event.username,
+        final user = await userRepository.authenticate(
+          email: event.email,
           password: event.password,
         );
 
-        authenticationBloc.dispatch(LoggedIn(token: token));
+        authenticationBloc.dispatch(LoggedIn(user: user));
         yield LoginInitial();
       } catch (error) {
         yield LoginFailure(error: error.toString());
       }
+    }
+    if (event is LoginRegisterButtonPressed) {
+      yield LoginLoading();
+      authenticationBloc.dispatch(RegisterButtonPress());
     }
   }
 }

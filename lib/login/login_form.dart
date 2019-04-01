@@ -21,7 +21,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   LoginBloc get _loginBloc => widget.loginBloc;
@@ -45,29 +45,71 @@ class _LoginFormState extends State<LoginForm> {
             });
           }
 
+          _emailController.text = 'customer1@test.com';
+          _passwordController.text = 'customer123';
+
           return Form(
-              child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Username'),
-                controller: _usernameController,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'password'),
-                controller: _passwordController,
-                obscureText: true,
-              ),
-              RaisedButton(
-                onPressed:
-                    state is! LoginLoading ? _onLoginButtonPressed : null,
-                child: Text('Login'),
-              ),
-              Container(
-                child:
-                    state is LoginLoading ? CircularProgressIndicator() : null,
-              )
-            ],
-          ));
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              children: <Widget>[
+                SizedBox(height: 80.0),
+                Column(
+                  children: <Widget>[
+                    Theme.of(context).backgroundColor ==
+                            ThemeData.light().backgroundColor
+                        ? Image.asset('assets/logo.png')
+                        : Image.asset('assets/logo_dark.png')
+                  ],
+                ),
+                SizedBox(height: 120.0),
+                TextField(
+                  decoration: new InputDecoration(
+                    labelText: "Email",
+                    fillColor: Colors.blue,
+                    border: new OutlineInputBorder(),
+                  ),
+                  controller: _emailController,
+                ),
+// spacer
+                SizedBox(height: 12.0),
+// [Password]
+                TextField(
+                  decoration: new InputDecoration(
+                    labelText: "Password",
+                    fillColor: Colors.blue,
+                    border: new OutlineInputBorder(),
+                    //fillColor: Colors.green
+                  ),
+                  controller: _passwordController,
+                  obscureText: true,
+                ),
+                ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text('Register'),
+                      onPressed: state is! LoginLoading
+                          ? _onRegisterButtonPressed
+                          : null,
+                    ),
+                    RaisedButton(
+                      child: Text('Log In'),
+                      onPressed:
+                          state is! LoginLoading ? _onLoginButtonPressed : null,
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: <Widget>[
+                    Center(
+                      child: state is LoginLoading
+                          ? CircularProgressIndicator()
+                          : null,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          );
         });
   }
 
@@ -79,8 +121,12 @@ class _LoginFormState extends State<LoginForm> {
 
   _onLoginButtonPressed() {
     _loginBloc.dispatch(LoginButtonPressed(
-      username: _usernameController.text,
+      email: _emailController.text,
       password: _passwordController.text,
     ));
+  }
+
+  _onRegisterButtonPressed() {
+    _loginBloc.dispatch(LoginRegisterButtonPressed());
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:user_repository/user_repository.dart';
+import 'package:rails_api_connection/rails_api_connection.dart';
 
 import 'package:open_copyright_platform/authentication/index.dart';
 import 'package:open_copyright_platform/login/index.dart';
@@ -38,9 +38,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
       body: LoginForm(
         authenticationBloc: _authenticationBloc,
         loginBloc: _loginBloc,

@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'package:open_copyright_platform/login/index.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,14 +6,23 @@ abstract class LoginEvent extends Equatable {
 }
 
 class LoginButtonPressed extends LoginEvent {
-  final String username;
+  final String email;
   final String password;
 
-  LoginButtonPressed({@required this.username, @required this.password})
-      : super([username, password]);
+  LoginButtonPressed({@required this.email, @required this.password})
+      : super([email, password]);
 
   @override
   String toString() {
-    return 'LoginButtonPressed { username: $username, password: $password}';
+    return 'LoginButtonPressed { email: $email, password: $password}';
+  }
+}
+
+class LoginRegisterButtonPressed extends LoginEvent {
+  LoginRegisterButtonPressed() : super([]);
+
+  @override
+  String toString() {
+    return 'RegisterButtonPressed';
   }
 }
