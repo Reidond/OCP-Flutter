@@ -5,8 +5,10 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Splash Screen'),
-      ),
+          child: Theme.of(context).backgroundColor ==
+                  ThemeData.light().backgroundColor
+              ? Image.asset('assets/logo.png')
+              : Image.asset('assets/logo_dark.png')),
     );
   }
 }
