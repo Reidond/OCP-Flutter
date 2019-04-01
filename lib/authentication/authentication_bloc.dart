@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:user_repository/user_repository.dart';
 import 'package:open_copyright_platform/authentication/index.dart';
+import 'package:rails_api_connection/rails_api_connection.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
@@ -18,9 +18,9 @@ class AuthenticationBloc
   Stream<AuthenticationState> mapEventToState(
       AuthenticationState currentState, AuthenticationEvent event) async* {
     if (event is AppStarted) {
-      final bool hasToken = await userRepository.hasToken();
+      final bool hasHeaders = await userRepository.hasHeaders();
 
-      if (hasToken) {
+      if (hasHeaders) {
         yield AuthenticationAuthenticated();
       } else {
         yield AuthenticationUnauthenticated();
@@ -29,13 +29,27 @@ class AuthenticationBloc
 
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await userRepository.persistToken(event.token);
+      await userRepository.persistHeaders(event.user);
       yield AuthenticationAuthenticated();
     }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
-      await userRepository.deleteToken();
+      await userRepository.deleteHeaders();
+      yield AuthenticationUnauthenticated();
+    }
+
+    if (event is RegisteredIn) {
+      yield AuthenticationLoading();
+      await userRepository.persistHeaders(event.user);
+      yield AuthenticationAuthenticated();
+    }
+
+    if (event is RegisterButtonPress) {
+      yield AuthenticationUnregistered();
+    }
+
+    if (event is LoginButtonPress) {
       yield AuthenticationUnauthenticated();
     }
   }
