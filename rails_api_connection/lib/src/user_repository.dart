@@ -15,14 +15,8 @@ class UserRepository {
     return http.post(url, body: body).then((http.Response response) {
       final int statusCode = response.statusCode;
 
-      if (statusCode < 200 ||
-          statusCode > 400 && statusCode != 422 ||
-          json == null) {
-        throw new Exception("Error while fetching data");
-      }
-
-      if (statusCode == 422) {
-        throw new Exception('This user is already registered');
+      if (statusCode < 200 || statusCode > 400 || json == null) {
+        throw new Exception(json.decode(response.body)['errors'][0]);
       }
 
       User user = new User(
