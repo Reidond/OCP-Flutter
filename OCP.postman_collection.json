@@ -1,0 +1,1736 @@
+{
+	"info": {
+		"_postman_id": "be88ebea-4dc0-4bd6-b9e6-eec0b7a9b71f",
+		"name": "OCP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [{
+			"name": "AUTHENTICATION CONTROLLER",
+			"item": [{
+					"name": "SIGN UP",
+					"request": {
+						"method": "POST",
+						"header": [{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"type": "text"
+						}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"customer2@test.com\",\n\t\"password\": \"customer123\",\n\t\"password_confirmation\": \"customer123\"\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/auth",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SIGN IN",
+					"request": {
+						"method": "POST",
+						"header": [{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"type": "text"
+						}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"director@mail.com\",\n    \"password\": \"384a7613d3f1c3d1\"\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/auth/sign_in",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"sign_in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SIGN OUT",
+					"request": {
+						"method": "DELETE",
+						"header": [{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/auth/sign_out",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"sign_out"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "ADMIN\n{\n\t\"name\": \"admin123\",\n  \t\"password\": \"admin123\"\n}\n\nDIRECTOR\n{\n    \"email\": \"director@mail.com\",\n    \"password\": \"384a7613d3f1c3d1\"\n}\n\nEXECUTOR\n{\n\t\"email\": \"execotor@mail.com\",\n\t\"password\": \"executor123\"\n}\n\nSECRETARY\n{\n\t\"email\": \"secretary@mail.com\",\n\t\"password\": \"secretary123\"\n}\n\nCUSTOMER\n{\n\t\"email\": \"customer@mail.com\",\n\t\"password\": \"customer123\"\n}",
+			"event": [{
+					"listen": "prerequest",
+					"script": {
+						"id": "d8fc20f7-7df9-4662-8c9c-261f6c8eb826",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "63b201dc-0713-4a7e-be20-d7c8c697fbbe",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "ADMIN CONTROLLER",
+			"item": [{
+				"name": "ADMIN CREATE DIRECTOR",
+				"request": {
+					"method": "POST",
+					"header": [{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}],
+					"body": {
+						"mode": "raw",
+						"raw": "{\n\t\"name\": \"admin123\",\n  \t\"password\": \"admin123\",\n  \t\"email\": \"director@mail.com\"\n}"
+					},
+					"url": {
+						"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/admin/directors",
+						"protocol": "http",
+						"host": [
+							"127",
+							"0",
+							"0",
+							"1"
+						],
+						"port": "3000",
+						"path": [
+							"api",
+							"v1",
+							"admin",
+							"directors"
+						]
+					}
+				},
+				"response": []
+			}],
+			"event": [{
+					"listen": "prerequest",
+					"script": {
+						"id": "3090154a-3b74-4bd9-877e-047fa8983afb",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ab3b81c3-92cc-4ba0-9ff7-954939ebeb65",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "DIRECTOR CONTROLLER",
+			"item": [{
+					"name": "DIRECTOR LIST USERS",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "Content-Type",
+								"value": " application/json; charset=utf-8",
+								"type": "text"
+							},
+							{
+								"key": "access-token",
+								"value": " AO2ySkxnuHubmKzzGsIs3A",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": " Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": " WdH0C4Kq8InR1tc-V9he_Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": " 1546531179",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": " admin123@test.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/users",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"director",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DIRECTOR CREATE EXECUTOR",
+					"request": {
+						"method": "POST",
+						"header": [{
+								"key": "access-token",
+								"value": " AO2ySkxnuHubmKzzGsIs3A",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": " Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": " WdH0C4Kq8InR1tc-V9he_Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": " 1546531179",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": " admin123@test.com",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"execotor@test.com\",\n\t\"password\": \"executor123\",\n\t\"password_confirmation\": \"executor123\",\n\t\"type\": \"executor\"\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/users",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"director",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DIRECTOR CREATE SECRETARY",
+					"request": {
+						"method": "POST",
+						"header": [{
+								"key": "access-token",
+								"value": " AO2ySkxnuHubmKzzGsIs3A",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": " Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": " WdH0C4Kq8InR1tc-V9he_Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": " 1546531179",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": " admin123@test.com",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"secretary@test.com\",\n\t\"password\": \"secretary123\",\n\t\"password_confirmation\": \"secretary123\",\n\t\"type\": \"secretary\"\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/users",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"director",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DIRECTOR DESTROY USERS",
+					"request": {
+						"method": "DELETE",
+						"header": [{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "access-token",
+								"value": "TQLk8iLXmcHMqHyCdcGrfw",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "RW4T8lQ-w2wBAklQQHT5hA",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553951440",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "director@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/users/9",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"director",
+								"users",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATIONS ACCEPT",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "bRRN5GJRpKuWOcoBStnYJw",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "wLN_PEnPXtVOmMftsGGS8w",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1554588936",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "secretary@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/copyright_applications/accept/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"director",
+								"copyright_applications",
+								"accept",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATIONS DECLINE",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "bRRN5GJRpKuWOcoBStnYJw",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "wLN_PEnPXtVOmMftsGGS8w",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1554588936",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "secretary@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/copyright_applications/decline/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"director",
+								"copyright_applications",
+								"decline",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [{
+					"listen": "prerequest",
+					"script": {
+						"id": "5bef0ca2-8699-4142-8c20-fb9d89272113",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c54f63fb-e889-4864-90c4-857b6b08dc31",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "PRODUCTS CONTROLLER",
+			"item": [{
+					"name": "PRODUCTS LIST",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRODUCTS SHOW",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "hUvXXUonp79qMDkpt_FHFw",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "2gMQF8s46EcGlNZR-sASTg",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1554594762",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/products/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRODUCTS CREATE",
+					"request": {
+						"method": "POST",
+						"header": [{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "access-token",
+								"value": "hUvXXUonp79qMDkpt_FHFw",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "2gMQF8s46EcGlNZR-sASTg",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1554594762",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Product\",\t\n\t\"description\": \"Description\",\n\t\"product_type\": 1\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRODUCTS UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Product Update\",\n\t\"description\": \"Description Update\",\n\t\"product_type\": 2\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/products/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRODUCTS DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/products/6",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "APPLICATIONS CONTROLLER",
+			"item": [{
+					"name": "APPLICATIONS LIST",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"copyright_applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATIONS SHOW",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/21",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"copyright_applications",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATIONS CREATE",
+					"request": {
+						"method": "POST",
+						"header": [{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": \"1\",\n    \"title\": \"Application\",\n    \"description\": \"Description\",\n    \"tasks\": [\n        {\n            \"title\": \"Task\"\n        },\n        {\n            \"title\": \"Task\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"copyright_applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATIONS UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Update Title\",\n    \"description\": \"Update Description\"\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/21",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"copyright_applications",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATIONS DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/22",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"copyright_applications",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATIONS SUBMIT",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/submit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"copyright_applications",
+								"submit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATIONS UNSUBMIT",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/unsubmit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"copyright_applications",
+								"unsubmit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "APPLICATION TASK CONTROLLER",
+			"item": [{
+					"name": "APPLICATION TASK UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Update 2 Title Create Controller\"\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/tasks/33",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"copyright_applications",
+								"tasks",
+								"33"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATION TASK CREATE",
+					"request": {
+						"method": "POST",
+						"header": [{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Title Create Controller\",\n\t\"copyright_application_id\": \"3\"\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/tasks",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"copyright_applications",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATION TASK DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "access-token",
+								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "aNYkykI4VLSbm11ogiGo3Q",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1553959700",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/tasks/33",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"copyright_applications",
+								"tasks",
+								"33"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SECRETARIES CONTROLLER",
+			"item": [{
+					"name": "APPLICATIONS ACCEPT",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "bRRN5GJRpKuWOcoBStnYJw",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "wLN_PEnPXtVOmMftsGGS8w",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1554588936",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "secretary@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/secretaries/copyright_applications/accept/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"secretaries",
+								"copyright_applications",
+								"accept",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APPLICATIONS DECLINE",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "bRRN5GJRpKuWOcoBStnYJw",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "wLN_PEnPXtVOmMftsGGS8w",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1554588936",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "secretary@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/secretaries/copyright_applications/decline/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"secretaries",
+								"copyright_applications",
+								"decline",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USER PARAM CONTROLLER",
+			"item": [{
+					"name": "USER PARAM CREATE",
+					"request": {
+						"method": "POST",
+						"header": [{
+								"key": "access-token",
+								"value": "hUvXXUonp79qMDkpt_FHFw",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "2gMQF8s46EcGlNZR-sASTg",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1554594762",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"first_name\": \"First Name\",\n\t\"last_name\": \"Last Name\",\n\t\"email\": \"Email New\",\n\t\"address\": \"Address\"\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/user/params",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"params"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER PARAM SHOW",
+					"request": {
+						"method": "GET",
+						"header": [{
+								"key": "access-token",
+								"value": "hUvXXUonp79qMDkpt_FHFw",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "2gMQF8s46EcGlNZR-sASTg",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1554594762",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/user/params",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"params"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER PARAM UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [{
+								"key": "access-token",
+								"value": "hUvXXUonp79qMDkpt_FHFw",
+								"type": "text"
+							},
+							{
+								"key": "token-type",
+								"value": "Bearer",
+								"type": "text"
+							},
+							{
+								"key": "client",
+								"value": "2gMQF8s46EcGlNZR-sASTg",
+								"type": "text"
+							},
+							{
+								"key": "expiry",
+								"value": "1554594762",
+								"type": "text"
+							},
+							{
+								"key": "uid",
+								"value": "customer@mail.com",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"first_name\": \"First Name Update\",\n\t\"last_name\": \"Last Name\",\n\t\"email\": \"Email Update\",\n\t\"address\": \"Address\"\n}"
+						},
+						"url": {
+							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/user/params",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"params"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
