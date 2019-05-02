@@ -45,8 +45,8 @@ class _LoginFormState extends State<LoginForm> {
             });
           }
 
-          _emailController.text = 'customer1@test.com';
-          _passwordController.text = 'customer123';
+          // _emailController.text = 'customer1@test.com';
+          // _passwordController.text = 'customer123';
 
           return Form(
             child: ListView(
@@ -62,18 +62,23 @@ class _LoginFormState extends State<LoginForm> {
                   ],
                 ),
                 SizedBox(height: 120.0),
-                TextField(
+                TextFormField(
                   decoration: new InputDecoration(
                     labelText: "Email",
                     fillColor: Colors.blue,
                     border: new OutlineInputBorder(),
                   ),
                   controller: _emailController,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
                 ),
 // spacer
                 SizedBox(height: 12.0),
 // [Password]
-                TextField(
+                TextFormField(
                   decoration: new InputDecoration(
                     labelText: "Password",
                     fillColor: Colors.blue,
@@ -82,6 +87,11 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   controller: _passwordController,
                   obscureText: true,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
                 ),
                 ButtonBar(
                   children: <Widget>[

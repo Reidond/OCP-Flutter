@@ -47,9 +47,9 @@ class _RegisterFormState extends State<RegisterForm> {
             });
           }
 
-          _emailController.text = 'customer3@test.com';
-          _passwordController.text = 'customer123';
-          _passwordConfirmationController.text = 'customer123';
+          // _emailController.text = 'customer3@test.com';
+          // _passwordController.text = 'customer123';
+          // _passwordConfirmationController.text = 'customer123';
 
           return Form(
             child: ListView(
@@ -66,16 +66,21 @@ class _RegisterFormState extends State<RegisterForm> {
                   ],
                 ),
                 SizedBox(height: 120.0),
-                TextField(
+                TextFormField(
                   decoration: new InputDecoration(
                     labelText: "Email",
                     fillColor: Colors.blue,
                     border: new OutlineInputBorder(),
                   ),
                   controller: _emailController,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
                 ),
                 SizedBox(height: 12.0),
-                TextField(
+                TextFormField(
                   decoration: new InputDecoration(
                     labelText: "Password",
                     fillColor: Colors.blue,
@@ -83,9 +88,14 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                   controller: _passwordController,
                   obscureText: true,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
                 ),
                 SizedBox(height: 12.0),
-                TextField(
+                TextFormField(
                   decoration: new InputDecoration(
                     labelText: "Password confirmation",
                     fillColor: Colors.blue,
@@ -94,6 +104,11 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                   controller: _passwordConfirmationController,
                   obscureText: true,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
                 ),
                 ButtonBar(
                   children: <Widget>[
