@@ -7,7 +7,7 @@ import 'package:open_copyright_platform/authentication/index.dart';
 import 'package:open_copyright_platform/register/index.dart';
 import 'package:open_copyright_platform/splash/index.dart';
 import 'package:open_copyright_platform/login/index.dart';
-import 'package:open_copyright_platform/home/index.dart';
+import 'package:open_copyright_platform/dashboard/index.dart';
 import 'package:open_copyright_platform/common/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
@@ -68,7 +68,7 @@ class _AppState extends State<App> {
               return SplashPage();
             }
             if (state is AuthenticationAuthenticated) {
-              return HomePage();
+              return DashBoardPage();
             }
             if (state is AuthenticationUnauthenticated) {
               return LoginPage(userRepository: _userRepository);
