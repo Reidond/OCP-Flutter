@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:open_copyright_platform/authentication/index.dart';
+import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:open_copyright_platform/home2/index.dart';
 import 'package:open_copyright_platform/register/index.dart';
 import 'package:open_copyright_platform/splash/index.dart';
@@ -40,11 +41,15 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   AuthenticationBloc _authenticationBloc;
+  BottomAppBarBloc _bottomAppBarBloc;
   UserRepository get _userRepository => widget.userRepository;
 
   @override
   void initState() {
     _authenticationBloc = AuthenticationBloc(userRepository: _userRepository);
+    _bottomAppBarBloc = BottomAppBarBloc();
+
+    _bottomAppBarBloc.dispatch(InitialBottomAppBar());
     _authenticationBloc.dispatch(AppStarted());
     super.initState();
   }
@@ -52,13 +57,17 @@ class _AppState extends State<App> {
   @override
   void dispose() {
     _authenticationBloc.dispose();
+    _bottomAppBarBloc.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthenticationBloc>(
-      bloc: _authenticationBloc,
+    return BlocProviderTree(
+      blocProviders: [
+        BlocProvider<AuthenticationBloc>(bloc: _authenticationBloc),
+        BlocProvider<BottomAppBarBloc>(bloc: _bottomAppBarBloc),
+      ],
       child: MaterialApp(
         title: 'Open Copyright Platform',
         theme: ThemeData.light(),
