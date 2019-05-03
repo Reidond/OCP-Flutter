@@ -1,16 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
-@immutable
-abstract class ProductsEvent extends Equatable {
-  ProductsEvent([List props = const []]) : super(props);
-}
+abstract class ProductsEvent extends Equatable {}
 
-class ProductsAppBarButtonPress {
-  ProductsAppBarButtonPress() : super();
-
+class Fetch extends ProductsEvent {
   @override
   String toString() {
-    return 'ProductsAppBarButtonPress';
+    return 'Fetch';
   }
 }

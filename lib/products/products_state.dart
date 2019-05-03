@@ -1,21 +1,39 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+import 'package:rails_api_connection/rails_api_connection.dart';
 
-@immutable
 abstract class ProductsState extends Equatable {
   ProductsState([List props = const []]) : super(props);
 }
 
-class InitialProductsState extends ProductsState {
+class ProductsUninitialized extends ProductsState {
   @override
   String toString() {
-    return 'InitialProductsState';
+    return 'ProductsUninitialized';
   }
 }
 
-class ProductsLoading extends InitialProductsState {
+class ProductsError extends ProductsState {
   @override
   String toString() {
-    return 'ProductsLoading';
+    return 'ProductsError';
+  }
+}
+
+class ProductsLoaded extends ProductsState {
+  final List<Product> products;
+  final bool hasReachedMax;
+
+  ProductsLoaded({this.products, this.hasReachedMax})
+      : super([products, hasReachedMax]);
+
+  ProductsLoaded copyWith({List<Product> products, bool hasReachedMax}) {
+    return ProductsLoaded(
+        products: products ?? this.products,
+        hasReachedMax: hasReachedMax ?? this.hasReachedMax);
+  }
+
+  @override
+  String toString() {
+    return 'ProductsLoaded { products: ${products.length}, hasReachedMax: $hasReachedMax }';
   }
 }
