@@ -41,15 +41,12 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   AuthenticationBloc _authenticationBloc;
-  BottomAppBarBloc _bottomAppBarBloc;
   UserRepository get _userRepository => widget.userRepository;
 
   @override
   void initState() {
     _authenticationBloc = AuthenticationBloc(userRepository: _userRepository);
-    _bottomAppBarBloc = BottomAppBarBloc();
 
-    _bottomAppBarBloc.dispatch(InitialBottomAppBar());
     _authenticationBloc.dispatch(AppStarted());
     super.initState();
   }
@@ -57,7 +54,6 @@ class _AppState extends State<App> {
   @override
   void dispose() {
     _authenticationBloc.dispose();
-    _bottomAppBarBloc.dispose();
     super.dispose();
   }
 
@@ -65,12 +61,11 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return BlocProviderTree(
       blocProviders: [
-        BlocProvider<AuthenticationBloc>(bloc: _authenticationBloc),
-        BlocProvider<BottomAppBarBloc>(bloc: _bottomAppBarBloc),
+        BlocProvider<AuthenticationBloc>(bloc: _authenticationBloc)
       ],
       child: MaterialApp(
         title: 'Open Copyright Platform',
-        theme: ThemeData.light(),
+        theme: ThemeData.dark(),
         home: BlocBuilder<AuthenticationEvent, AuthenticationState>(
           bloc: _authenticationBloc,
           builder: (BuildContext context, AuthenticationState state) {
