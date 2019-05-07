@@ -7,3 +7,17 @@ abstract class Home2State extends Equatable {
 }
 
 class InitialHome2State extends Home2State {}
+
+class ProductsDrawerButton extends Home2State {
+  @override
+  String toString() {
+    return 'ProductsDrawerButton';
+  }
+}
+
+class ApplicationsDrawerButton extends Home2State {
+  @override
+  String toString() {
+    return 'ApplicationsDrawerButton';
+  }
+}
