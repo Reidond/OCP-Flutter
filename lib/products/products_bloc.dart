@@ -20,6 +20,9 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     ProductsState currentState,
     ProductsEvent event,
   ) async* {
+    if (event is InitialProductsEvent) {
+      yield ProductsUninitialized();
+    }
     if (event is Fetch && !_hasReachedMax(currentState)) {
       try {
         if (currentState is ProductsUninitialized) {

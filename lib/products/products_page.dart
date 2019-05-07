@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
 import 'package:open_copyright_platform/products/index.dart';
@@ -25,19 +26,22 @@ class _ProductsPageState extends State<ProductsPage> {
 
   ProductsBloc _productsBloc;
   final _scrollController = ScrollController();
-  final _scrollThreshold = 200.0;
 
   @override
   void initState() {
     _productsBloc = ProductsBloc(productsActions: _productsActions);
 
-    _scrollController.addListener(_onScroll);
     _productsBloc.dispatch(Fetch());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final BottomAppBarBloc bottomAppBarBloc =
+        BlocProvider.of<BottomAppBarBloc>(context);
+
+    bottomAppBarBloc.dispatch(BottomAppBarAddProducts());
+
     return BlocBuilder(
       bloc: _productsBloc,
       builder: (BuildContext context, ProductsState state) {
@@ -53,13 +57,9 @@ class _ProductsPageState extends State<ProductsPage> {
           }
           return ListView.builder(
             itemBuilder: (BuildContext context, int index) {
-              return index >= state.products.length
-                  ? BottomLoader()
-                  : ProductCard(state.products[index]);
+              return ProductCard(state.products[index]);
             },
-            itemCount: state.hasReachedMax
-                ? state.products.length
-                : state.products.length + 1,
+            itemCount: state.products.length,
             controller: _scrollController,
           );
         }
@@ -71,13 +71,5 @@ class _ProductsPageState extends State<ProductsPage> {
   void dispose() {
     _productsBloc.dispose();
     super.dispose();
-  }
-
-  void _onScroll() {
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-    if (maxScroll - currentScroll <= _scrollThreshold) {
-      _productsBloc.dispatch(Fetch());
-    }
   }
 }
