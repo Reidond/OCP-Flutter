@@ -7,6 +7,7 @@ import 'package:open_copyright_platform/authentication/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:open_copyright_platform/home2/index.dart';
 import 'package:open_copyright_platform/register/index.dart';
+import 'package:open_copyright_platform/settings/index.dart';
 import 'package:open_copyright_platform/splash/index.dart';
 import 'package:open_copyright_platform/login/index.dart';
 import 'package:open_copyright_platform/dashboard/index.dart';
@@ -59,36 +60,41 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsBloc = SettingsBloc();
     return BlocProviderTree(
-      blocProviders: [
-        BlocProvider<AuthenticationBloc>(bloc: _authenticationBloc)
-      ],
-      child: MaterialApp(
-        title: 'Open Copyright Platform',
-        theme: ThemeData.dark(),
-        home: BlocBuilder<AuthenticationEvent, AuthenticationState>(
-          bloc: _authenticationBloc,
-          builder: (BuildContext context, AuthenticationState state) {
-            if (state is AuthenticationUninitialized) {
-              return SplashPage();
-            }
-            if (state is AuthenticationAuthenticated) {
-              return DashBoardPage();
-            }
-            if (state is AuthenticationUnauthenticated) {
-              return LoginPage(userRepository: _userRepository);
-            }
-            if (state is AuthenticationUnregistered) {
-              return RegisterPage(
-                userRepository: _userRepository,
+        blocProviders: [
+          BlocProvider<AuthenticationBloc>(bloc: _authenticationBloc)
+        ],
+        child: StreamBuilder<ThemeData>(
+            initialData: settingsBloc.initialTheme().data,
+            stream: settingsBloc.themeDataStream,
+            builder: (BuildContext context, AsyncSnapshot<ThemeData> snapshot) {
+              return MaterialApp(
+                title: 'Open Copyright Platform',
+                theme: snapshot.data,
+                home: BlocBuilder<AuthenticationEvent, AuthenticationState>(
+                  bloc: _authenticationBloc,
+                  builder: (BuildContext context, AuthenticationState state) {
+                    if (state is AuthenticationUninitialized) {
+                      return SplashPage();
+                    }
+                    if (state is AuthenticationAuthenticated) {
+                      return DashBoardPage(settingsBloc: settingsBloc);
+                    }
+                    if (state is AuthenticationUnauthenticated) {
+                      return LoginPage(userRepository: _userRepository);
+                    }
+                    if (state is AuthenticationUnregistered) {
+                      return RegisterPage(
+                        userRepository: _userRepository,
+                      );
+                    }
+                    if (state is AuthenticationLoading) {
+                      return LoadingIndicator();
+                    }
+                  },
+                ),
               );
-            }
-            if (state is AuthenticationLoading) {
-              return LoadingIndicator();
-            }
-          },
-        ),
-      ),
-    );
+            }));
   }
 }

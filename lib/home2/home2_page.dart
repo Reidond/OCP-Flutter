@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/home2/index.dart';
+import 'package:open_copyright_platform/settings/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
 import '../authentication/index.dart';
@@ -11,7 +12,10 @@ import '../bottom_app_bar/index.dart';
 import '../products/index.dart';
 
 class Home2Page extends StatefulWidget {
+  final SettingsBloc settingsBloc;
   final productsActions = ProductsActions();
+
+  Home2Page({Key key, this.settingsBloc}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -21,6 +25,7 @@ class Home2Page extends StatefulWidget {
 
 class _Home2State extends State<Home2Page> {
   ProductsActions get _productsActions => widget.productsActions;
+  SettingsBloc get _settingsBloc => widget.settingsBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -96,9 +101,13 @@ class _Home2State extends State<Home2Page> {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.exit_to_app),
+                icon: Icon(Icons.settings),
                 onPressed: () {
-                  authenticationBloc.dispatch(LoggedOut());
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SettingsPage(
+                            settingsBloc: _settingsBloc,
+                            authenticationBloc: authenticationBloc,
+                          )));
                 },
               )
             ],
@@ -108,19 +117,26 @@ class _Home2State extends State<Home2Page> {
           blocProviders: [
             BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc)
           ],
-          child: MaterialApp(
-            title: 'Open Copyright Platform',
-            home: BlocBuilder<Home2Event, Home2State>(
-              bloc: home2Bloc,
-              builder: (BuildContext context, Home2State state) {
-                if (state is InitialHome2State) {
-                  return Container(child: Text("Hi"));
-                }
-                if (state is ProductsDrawerButton) {
-                  return ProductsPage(productsActions: _productsActions);
-                }
-              },
-            ),
+          child: StreamBuilder<ThemeData>(
+            stream: _settingsBloc.themeDataStream,
+            initialData: _settingsBloc.initialTheme().data,
+            builder: (BuildContext context, AsyncSnapshot<ThemeData> snapshot) {
+              return MaterialApp(
+                title: 'Open Copyright Platform',
+                theme: snapshot.data,
+                home: BlocBuilder<Home2Event, Home2State>(
+                  bloc: home2Bloc,
+                  builder: (BuildContext context, Home2State state) {
+                    if (state is InitialHome2State) {
+                      return Container(child: Text("Hi"));
+                    }
+                    if (state is ProductsDrawerButton) {
+                      return ProductsPage(productsActions: _productsActions);
+                    }
+                  },
+                ),
+              );
+            },
           ),
         ));
   }

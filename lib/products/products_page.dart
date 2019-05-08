@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
+import 'package:open_copyright_platform/settings/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
 import 'package:open_copyright_platform/products/index.dart';
@@ -10,8 +11,9 @@ import 'package:open_copyright_platform/common/index.dart';
 
 class ProductsPage extends StatefulWidget {
   final ProductsActions productsActions;
+  final SettingsBloc settingsBloc;
 
-  ProductsPage({Key key, @required this.productsActions})
+  ProductsPage({Key key, @required this.productsActions, this.settingsBloc})
       : assert(productsActions != null),
         super(key: key);
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/dashboard/index.dart';
 import 'package:open_copyright_platform/home2/index.dart';
+import 'package:open_copyright_platform/settings/index.dart';
 
 import '../authentication/index.dart';
 
@@ -11,6 +12,10 @@ import '../bottom_app_bar/index.dart';
 import '../products/index.dart';
 
 class DashBoardPage extends StatefulWidget {
+  final SettingsBloc settingsBloc;
+
+  DashBoardPage({Key key, this.settingsBloc}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _DashBoardState();
@@ -21,6 +26,8 @@ class _DashBoardState extends State<DashBoardPage> {
   BottomAppBarBloc _bottomAppBarBloc;
   Home2Bloc _home2bloc;
   DashBoardBloc _dashBoardBloc;
+
+  SettingsBloc get _settingsBloc => widget.settingsBloc;
 
   @override
   void initState() {
@@ -57,16 +64,25 @@ class _DashBoardState extends State<DashBoardPage> {
             BlocProvider<AuthenticationBloc>(bloc: authenticationBloc),
             BlocProvider<BottomAppBarBloc>(bloc: _bottomAppBarBloc)
           ],
-          child: MaterialApp(
-            title: 'Open Copyright Platform',
-            home: BlocBuilder<DashBoardEvent, DashBoardState>(
-              bloc: _dashBoardBloc,
-              builder: (BuildContext context, DashBoardState state) {
-                if (state is InitialDashBoardState) {
-                  return Home2Page();
-                }
-              },
-            ),
+          child: StreamBuilder<ThemeData>(
+            stream: _settingsBloc.themeDataStream,
+            initialData: _settingsBloc.initialTheme().data,
+            builder: (BuildContext context, AsyncSnapshot<ThemeData> snapshot) {
+              return MaterialApp(
+                title: 'Open Copyright Platform',
+                theme: snapshot.data,
+                home: BlocBuilder<DashBoardEvent, DashBoardState>(
+                  bloc: _dashBoardBloc,
+                  builder: (BuildContext context, DashBoardState state) {
+                    if (state is InitialDashBoardState) {
+                      return Home2Page(
+                        settingsBloc: _settingsBloc,
+                      );
+                    }
+                  },
+                ),
+              );
+            },
           ),
         ));
   }
