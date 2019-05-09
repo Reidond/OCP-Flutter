@@ -17,8 +17,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
   @override
   Stream<ProductsState> mapEventToState(
-    ProductsState currentState,
-    ProductsEvent event,
+    ProductsEvent event
   ) async* {
     if (event is InitialProductsEvent) {
       yield ProductsUninitialized();
@@ -31,9 +30,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
         }
         if (currentState is ProductsLoaded) {
           final products = await productsActions.fetchPosts();
-          yield products.isEmpty
-              ? currentState.copyWith(hasReachedMax: true)
-              : ProductsLoaded(products: products, hasReachedMax: true);
+          yield ProductsLoaded(products: products, hasReachedMax: true);
         }
       } catch (_) {
         yield ProductsError();

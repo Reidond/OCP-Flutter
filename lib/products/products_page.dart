@@ -51,11 +51,11 @@ class _ProductsPageState extends State<ProductsPage> {
           return Center(child: CircularProgressIndicator());
         }
         if (state is ProductsError) {
-          return Center(child: Text('Failed to fetch products'));
+          return Center(child: Center(child: Text('Failed to fetch products')));
         }
         if (state is ProductsLoaded) {
           if (state.products.isEmpty) {
-            return Center(child: Text('No posts'));
+            return Center(child: Center(child: Text('No posts')));
           }
           return ListView.builder(
             itemBuilder: (BuildContext context, int index) {

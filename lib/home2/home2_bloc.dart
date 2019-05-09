@@ -8,8 +8,7 @@ class Home2Bloc extends Bloc<Home2Event, Home2State> {
 
   @override
   Stream<Home2State> mapEventToState(
-    Home2State currentState,
-    Home2Event event,
+    Home2Event event
   ) async* {
     if (event is InitialHome2) {
       yield InitialHome2State();

@@ -20,7 +20,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   @override
   Stream<RegisterState> mapEventToState(
-      RegisterState currentState, RegisterEvent event) async* {
+      RegisterEvent event) async* {
     if (event is RegisterButtonPressed) {
       yield RegisterLoading();
 

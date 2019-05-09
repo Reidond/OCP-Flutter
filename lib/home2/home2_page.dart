@@ -48,7 +48,10 @@ class _Home2State extends State<Home2Page> {
               DrawerHeader(
                 child: Image.asset('assets/icon.png'),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).backgroundColor ==
+                      ThemeData.light().backgroundColor
+                      ? Colors.white
+                      : Colors.black12,
                 ),
               ),
               ListTile(
@@ -128,7 +131,7 @@ class _Home2State extends State<Home2Page> {
                   bloc: home2Bloc,
                   builder: (BuildContext context, Home2State state) {
                     if (state is InitialHome2State) {
-                      return Container(child: Text("Hi"));
+                      return Container(child: Center(child: Text("Henlo")));
                     }
                     if (state is ProductsDrawerButton) {
                       return ProductsPage(productsActions: _productsActions);

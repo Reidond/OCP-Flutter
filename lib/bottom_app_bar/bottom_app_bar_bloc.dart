@@ -7,8 +7,7 @@ class BottomAppBarBloc extends Bloc<BottomAppBarEvent, BottomAppBarState> {
   BottomAppBarState get initialState => InitialBottomAppBarState();
 
   @override
-  Stream<BottomAppBarState> mapEventToState(
-      BottomAppBarState currentState, BottomAppBarEvent event) async* {
+  Stream<BottomAppBarState> mapEventToState(BottomAppBarEvent event) async* {
     if (event is InitialBottomAppBar) {
       yield InitialBottomAppBarState();
     }
