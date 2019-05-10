@@ -15,3 +15,10 @@ class Fetch extends ProductsEvent {
     return 'Fetch';
   }
 }
+
+class Show extends ProductsEvent {
+  @override
+  String toString() {
+    return 'Show';
+  }
+}

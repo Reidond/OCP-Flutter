@@ -27,7 +27,6 @@ class _ProductsPageState extends State<ProductsPage> {
   ProductsActions get _productsActions => widget.productsActions;
 
   ProductsBloc _productsBloc;
-  final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -44,28 +43,15 @@ class _ProductsPageState extends State<ProductsPage> {
 
     bottomAppBarBloc.dispatch(BottomAppBarAddProducts());
 
-    return BlocBuilder(
+    return BlocProvider<ProductsBloc>(
       bloc: _productsBloc,
-      builder: (BuildContext context, ProductsState state) {
-        if (state is ProductsUninitialized) {
-          return Center(child: CircularProgressIndicator());
-        }
-        if (state is ProductsError) {
-          return Center(child: Center(child: Text('Failed to fetch products')));
-        }
-        if (state is ProductsLoaded) {
-          if (state.products.isEmpty) {
-            return Center(child: Center(child: Text('No posts')));
-          }
-          return ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return ProductCard(state.products[index]);
-            },
-            itemCount: state.products.length,
-            controller: _scrollController,
-          );
-        }
-      },
+      child: MaterialApp(
+        routes: {
+          '/': (context) => ProductList(),
+          '/show': (context) => ProductShow(),
+        },
+        initialRoute: '/',
+      ),
     );
   }
 

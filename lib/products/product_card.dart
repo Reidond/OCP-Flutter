@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/products/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
@@ -25,6 +26,9 @@ class ProductCardState extends State<ProductCard> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
           ListTile(
+            onTap: () {
+              BlocProvider.of<ProductsBloc>(context).dispatch(Show());
+            },
             leading: Icon(ProductType.getCorrespondingImageType(product.productType)),
             title: Text(product.name,
                 style: TextStyle(fontSize: 16.0)),

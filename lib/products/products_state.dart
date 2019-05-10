@@ -21,19 +21,24 @@ class ProductsError extends ProductsState {
 
 class ProductsLoaded extends ProductsState {
   final List<Product> products;
-  final bool hasReachedMax;
 
-  ProductsLoaded({this.products, this.hasReachedMax})
-      : super([products, hasReachedMax]);
+  ProductsLoaded({this.products})
+      : super([products]);
 
-  ProductsLoaded copyWith({List<Product> products, bool hasReachedMax}) {
+  ProductsLoaded copyWith({List<Product> products}) {
     return ProductsLoaded(
-        products: products ?? this.products,
-        hasReachedMax: hasReachedMax ?? this.hasReachedMax);
+        products: products ?? this.products);
   }
 
   @override
   String toString() {
-    return 'ProductsLoaded { products: ${products.length}, hasReachedMax: $hasReachedMax }';
+    return 'ProductsLoaded { products: ${products.length} }';
+  }
+}
+
+class ProductShowed extends ProductsState {
+  @override
+  String toString() {
+    return 'ProductShowed';
   }
 }

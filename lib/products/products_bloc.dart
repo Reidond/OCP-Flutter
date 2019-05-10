@@ -16,28 +16,30 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   ProductsState get initialState => ProductsUninitialized();
 
   @override
-  Stream<ProductsState> mapEventToState(
-    ProductsEvent event
-  ) async* {
+  Stream<ProductsState> mapEventToState(ProductsEvent event) async* {
     if (event is InitialProductsEvent) {
       yield ProductsUninitialized();
     }
-    if (event is Fetch && !_hasReachedMax(currentState)) {
+    if (event is Fetch) {
       try {
         if (currentState is ProductsUninitialized) {
           final products = await productsActions.fetchPosts();
-          yield ProductsLoaded(products: products, hasReachedMax: false);
+          yield ProductsLoaded(products: products);
         }
         if (currentState is ProductsLoaded) {
           final products = await productsActions.fetchPosts();
-          yield ProductsLoaded(products: products, hasReachedMax: true);
+          yield ProductsLoaded(products: products);
+        }
+        if (currentState is ProductShowed) {
+          final products = await productsActions.fetchPosts();
+          yield ProductsLoaded(products: products);
         }
       } catch (_) {
         yield ProductsError();
       }
     }
+    if (event is Show) {
+      yield ProductShowed();
+    }
   }
-
-  bool _hasReachedMax(ProductsState state) =>
-      state is ProductsLoaded && state.hasReachedMax;
 }
