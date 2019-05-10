@@ -12,10 +12,7 @@ import '../bottom_app_bar/index.dart';
 import '../products/index.dart';
 
 class Home2Page extends StatefulWidget {
-  final SettingsBloc settingsBloc;
   final productsActions = ProductsActions();
-
-  Home2Page({Key key, this.settingsBloc}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -25,7 +22,6 @@ class Home2Page extends StatefulWidget {
 
 class _Home2State extends State<Home2Page> {
   ProductsActions get _productsActions => widget.productsActions;
-  SettingsBloc get _settingsBloc => widget.settingsBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +30,8 @@ class _Home2State extends State<Home2Page> {
 
     final BottomAppBarBloc bottomAppBarBloc =
         BlocProvider.of<BottomAppBarBloc>(context);
+
+    final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
 
     final Home2Bloc home2Bloc = BlocProvider.of<Home2Bloc>(context);
 
@@ -108,7 +106,7 @@ class _Home2State extends State<Home2Page> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => SettingsPage(
-                            settingsBloc: _settingsBloc,
+                            themeBloc: _themeBloc,
                             authenticationBloc: authenticationBloc,
                           )));
                 },
@@ -118,15 +116,14 @@ class _Home2State extends State<Home2Page> {
         ),
         body: BlocProviderTree(
           blocProviders: [
-            BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc)
+            BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc),
+            BlocProvider<ThemeBloc>(bloc: _themeBloc)
           ],
-          child: StreamBuilder<ThemeData>(
-            stream: _settingsBloc.themeDataStream,
-            initialData: _settingsBloc.initialTheme().data,
-            builder: (BuildContext context, AsyncSnapshot<ThemeData> snapshot) {
+          child: BlocBuilder(
+            bloc: _themeBloc,
+            builder: (_, ThemeData theme) {
               return MaterialApp(
-                title: 'Open Copyright Platform',
-                theme: snapshot.data,
+                theme: theme,
                 home: BlocBuilder<Home2Event, Home2State>(
                   bloc: home2Bloc,
                   builder: (BuildContext context, Home2State state) {
@@ -140,7 +137,8 @@ class _Home2State extends State<Home2Page> {
                 ),
               );
             },
-          ),
-        ));
+          )
+        )
+    );
   }
 }

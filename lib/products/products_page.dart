@@ -11,9 +11,8 @@ import 'package:open_copyright_platform/common/index.dart';
 
 class ProductsPage extends StatefulWidget {
   final ProductsActions productsActions;
-  final SettingsBloc settingsBloc;
 
-  ProductsPage({Key key, @required this.productsActions, this.settingsBloc})
+  ProductsPage({Key key, @required this.productsActions})
       : assert(productsActions != null),
         super(key: key);
 
@@ -41,17 +40,25 @@ class _ProductsPageState extends State<ProductsPage> {
     final BottomAppBarBloc bottomAppBarBloc =
         BlocProvider.of<BottomAppBarBloc>(context);
 
+    final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
+
     bottomAppBarBloc.dispatch(BottomAppBarAddProducts());
 
     return BlocProvider<ProductsBloc>(
       bloc: _productsBloc,
-      child: MaterialApp(
-        routes: {
-          '/': (context) => ProductList(),
-          '/show': (context) => ProductShow(),
+      child: BlocBuilder(
+        bloc: _themeBloc,
+        builder: (_, ThemeData theme) {
+          return MaterialApp(
+            theme: theme,
+            routes: {
+              '/': (context) => ProductList(),
+              '/show': (context) => ProductShow(),
+            },
+            initialRoute: '/',
+          );
         },
-        initialRoute: '/',
-      ),
+      )
     );
   }
 

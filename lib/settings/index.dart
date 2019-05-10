@@ -1,3 +1,3 @@
-export 'themes_bloc.dart';
-export 'demo_theme.dart';
+export 'theme_bloc.dart';
 export 'settings_page.dart';
+export 'settings_button.dart';

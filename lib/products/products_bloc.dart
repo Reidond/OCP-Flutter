@@ -40,6 +40,14 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     }
     if (event is Show) {
       yield ProductShowed();
+      try {
+        if (currentState is ProductShowed) {
+          final products = await productsActions.fetchPosts();
+          yield ProductsLoaded(products: products);
+        }
+      } catch (_) {
+        yield ProductsError();
+      }
     }
   }
 }

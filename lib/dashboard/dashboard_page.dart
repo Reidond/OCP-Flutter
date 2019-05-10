@@ -12,10 +12,6 @@ import '../bottom_app_bar/index.dart';
 import '../products/index.dart';
 
 class DashBoardPage extends StatefulWidget {
-  final SettingsBloc settingsBloc;
-
-  DashBoardPage({Key key, this.settingsBloc}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() {
     return _DashBoardState();
@@ -26,8 +22,6 @@ class _DashBoardState extends State<DashBoardPage> {
   BottomAppBarBloc _bottomAppBarBloc;
   Home2Bloc _home2bloc;
   DashBoardBloc _dashBoardBloc;
-
-  SettingsBloc get _settingsBloc => widget.settingsBloc;
 
   @override
   void initState() {
@@ -54,36 +48,33 @@ class _DashBoardState extends State<DashBoardPage> {
     final AuthenticationBloc authenticationBloc =
         BlocProvider.of<AuthenticationBloc>(context);
 
+    final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
+
     GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
 
     return new Scaffold(
         key: _scaffoldKey,
         body: BlocProviderTree(
-          blocProviders: [
-            BlocProvider<Home2Bloc>(bloc: _home2bloc),
-            BlocProvider<AuthenticationBloc>(bloc: authenticationBloc),
-            BlocProvider<BottomAppBarBloc>(bloc: _bottomAppBarBloc)
-          ],
-          child: StreamBuilder<ThemeData>(
-            stream: _settingsBloc.themeDataStream,
-            initialData: _settingsBloc.initialTheme().data,
-            builder: (BuildContext context, AsyncSnapshot<ThemeData> snapshot) {
-              return MaterialApp(
-                title: 'Open Copyright Platform',
-                theme: snapshot.data,
-                home: BlocBuilder<DashBoardEvent, DashBoardState>(
-                  bloc: _dashBoardBloc,
-                  builder: (BuildContext context, DashBoardState state) {
-                    if (state is InitialDashBoardState) {
-                      return Home2Page(
-                        settingsBloc: _settingsBloc,
-                      );
-                    }
-                  },
-                ),
-              );
-            },
-          ),
-        ));
+            blocProviders: [
+              BlocProvider<Home2Bloc>(bloc: _home2bloc),
+              BlocProvider<AuthenticationBloc>(bloc: authenticationBloc),
+              BlocProvider<BottomAppBarBloc>(bloc: _bottomAppBarBloc),
+              BlocProvider<ThemeBloc>(bloc: _themeBloc)
+            ],
+            child: BlocBuilder(
+                bloc: _themeBloc,
+                builder: (_, ThemeData theme) {
+                  return MaterialApp(
+                    theme: theme,
+                    home: BlocBuilder<DashBoardEvent, DashBoardState>(
+                      bloc: _dashBoardBloc,
+                      builder: (BuildContext context, DashBoardState state) {
+                        if (state is InitialDashBoardState) {
+                          return Home2Page();
+                        }
+                      },
+                    ),
+                  );
+                })));
   }
 }

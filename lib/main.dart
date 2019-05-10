@@ -44,6 +44,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   AuthenticationBloc _authenticationBloc;
+  final ThemeBloc _themeBloc = ThemeBloc();
   UserRepository get _userRepository => widget.userRepository;
 
   @override
@@ -62,41 +63,39 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    final settingsBloc = SettingsBloc();
     return BlocProviderTree(
         blocProviders: [
-          BlocProvider<AuthenticationBloc>(bloc: _authenticationBloc)
+          BlocProvider<AuthenticationBloc>(bloc: _authenticationBloc),
+          BlocProvider<ThemeBloc>(bloc: _themeBloc)
         ],
-        child: StreamBuilder<ThemeData>(
-            initialData: settingsBloc.initialTheme().data,
-            stream: settingsBloc.themeDataStream,
-            builder: (BuildContext context, AsyncSnapshot<ThemeData> snapshot) {
-              return MaterialApp(
-                title: 'Open Copyright Platform',
-                theme: snapshot.data,
-                home: BlocBuilder<AuthenticationEvent, AuthenticationState>(
-                  bloc: _authenticationBloc,
-                  builder: (BuildContext context, AuthenticationState state) {
-                    if (state is AuthenticationUninitialized) {
-                      return SplashPage();
-                    }
-                    if (state is AuthenticationAuthenticated) {
-                      return DashBoardPage(settingsBloc: settingsBloc);
-                    }
-                    if (state is AuthenticationUnauthenticated) {
-                      return LoginPage(userRepository: _userRepository);
-                    }
-                    if (state is AuthenticationUnregistered) {
-                      return RegisterPage(
-                        userRepository: _userRepository,
-                      );
-                    }
-                    if (state is AuthenticationLoading) {
-                      return LoadingIndicator();
-                    }
-                  },
-                ),
-              );
-            }));
+        child: BlocBuilder(bloc: _themeBloc, builder: (_, ThemeData theme) {
+          return MaterialApp(
+            title: 'Open Copyright Platform',
+            theme: theme,
+            home: BlocBuilder<AuthenticationEvent, AuthenticationState>(
+              bloc: _authenticationBloc,
+              builder: (BuildContext context, AuthenticationState state) {
+                if (state is AuthenticationUninitialized) {
+                  return SplashPage();
+                }
+                if (state is AuthenticationAuthenticated) {
+                  return DashBoardPage();
+                }
+                if (state is AuthenticationUnauthenticated) {
+                  return LoginPage(userRepository: _userRepository);
+                }
+                if (state is AuthenticationUnregistered) {
+                  return RegisterPage(
+                    userRepository: _userRepository,
+                  );
+                }
+                if (state is AuthenticationLoading) {
+                  return LoadingIndicator();
+                }
+              },
+            ),
+          );
+        })
+    );
   }
 }

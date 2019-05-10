@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/authentication/index.dart';
 import 'index.dart';
 
 class SettingsPage extends StatelessWidget {
-  final SettingsBloc settingsBloc;
+  final ThemeBloc themeBloc;
   final AuthenticationBloc authenticationBloc;
 
-  SettingsPage({Key key, this.settingsBloc, this.authenticationBloc})
+  SettingsPage({Key key, this.themeBloc, this.authenticationBloc})
       : super(key: key);
 
   @override
@@ -17,49 +18,20 @@ class SettingsPage extends StatelessWidget {
           'Settings',
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              RaisedButton(
-                onPressed: () =>
-                    settingsBloc.selectedTheme.add(_buildLightTheme()),
-                child: Text(
-                  'Light theme',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: RaisedButton(
-                  onPressed: () =>
-                      settingsBloc.selectedTheme.add(_buildDarkTheme()),
-                  child: Text(
-                    'Dark theme',
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: RaisedButton(
-                  onPressed: () => authenticationBloc.dispatch(LoggedOut()),
-                  child: Text(
-                    'Logout',
-                  ),
-                ),
-              )
-            ],
+      body: BlocBuilder(bloc: themeBloc, builder: (_, ThemeData theme) {
+        return MaterialApp(
+          theme: theme,
+          home: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                SettingsButton(Icons.exit_to_app, "Toogle dark mode", "Make your experience better", () => themeBloc.dispatch(ThemeEvent.toggle)),
+                SettingsButton(Icons.exit_to_app, "Logout", "Tap to logout", () => authenticationBloc.dispatch(LoggedOut()))
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      })
     );
-  }
-
-  DemoTheme _buildLightTheme() {
-    return DemoTheme('light', ThemeData.light());
-  }
-
-  DemoTheme _buildDarkTheme() {
-    return DemoTheme('dark', ThemeData.dark());
   }
 }
