@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/products/index.dart';
 
-class ProductList extends StatelessWidget {
+class ProductsList extends StatelessWidget {
   final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,8 @@ class ProductList extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
           if (state is ProductsError) {
-            return Center(child: Center(child: Text('Failed to fetch products')));
+            return Center(
+                child: Center(child: Text('Failed to fetch products')));
           }
           if (state is ProductsLoaded) {
             if (state.products.isEmpty) {
@@ -34,9 +35,7 @@ class ProductList extends StatelessWidget {
               controller: _scrollController,
             );
           }
-          if (state is ProductShowed) {
-            return Center(child: CircularProgressIndicator());
-          }
+          return Center(child: CircularProgressIndicator());
         },
       ),
     );

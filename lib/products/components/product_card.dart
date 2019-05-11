@@ -27,7 +27,7 @@ class ProductCardState extends State<ProductCard> {
           children: <Widget>[
           ListTile(
             onTap: () {
-              BlocProvider.of<ProductsBloc>(context).dispatch(Show());
+              BlocProvider.of<ProductsBloc>(context).dispatch(Show(id: product.id));
             },
             leading: Icon(ProductType.getCorrespondingImageType(product.productType)),
             title: Text(product.name,
