@@ -1,12 +1,14 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'user_headers.dart';
-import 'user_body.dart';
-import 'user.dart';
-import 'app_config.dart';
+import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
+import 'package:rails_api_connection/src/user/user.dart';
+import 'package:rails_api_connection/src/user/user_body.dart';
+import 'package:rails_api_connection/src/user/user_headers.dart';
+
+import '../app_config.dart';
+import '../storage_headers.dart';
 
 class UserRepository {
   final storage = new FlutterSecureStorage();
@@ -27,13 +29,9 @@ class UserRepository {
   }
 
   Future<void> removeUserHeadersFromServer(String url) async {
-    return http.delete(url, headers: {
-      'access-token': await storage.read(key: 'accessToken'),
-      'token-type': await storage.read(key: 'tokenType'),
-      'expiry': await storage.read(key: 'expiry'),
-      'client': await storage.read(key: 'client'),
-      'uid': await storage.read(key: 'uid'),
-    }).then((http.Response response) {
+    return http
+        .delete(url, headers: await StorageHeaders.getHeadersFromStorage())
+        .then((http.Response response) {
       final int statusCode = response.statusCode;
       if (statusCode < 200 || statusCode > 400 || json == null) {
         throw new Exception("Error while fetching data");
@@ -45,7 +43,7 @@ class UserRepository {
     @required String email,
     @required String password,
   }) async {
-    User user = await getUserFromServer(AppConfig.API_BASE + 'auth/sign_in',
+    User user = await getUserFromServer('${AppConfig.API_BASE}/auth/sign_in',
         body: {"email": email, "password": password});
     return user;
   }
@@ -55,7 +53,7 @@ class UserRepository {
     @required String password,
     @required String passwordConfirmation,
   }) async {
-    User user = await getUserFromServer(AppConfig.API_BASE + 'auth', body: {
+    User user = await getUserFromServer('${AppConfig.API_BASE}/auth', body: {
       "email": email,
       "password": password,
       "password_confirmation": passwordConfirmation
@@ -64,7 +62,7 @@ class UserRepository {
   }
 
   Future<void> deleteHeaders() async {
-    await removeUserHeadersFromServer(AppConfig.API_BASE + 'auth/sign_out');
+    await removeUserHeadersFromServer('${AppConfig.API_BASE}/auth/sign_out');
     await storage.delete(key: 'client');
     await storage.delete(key: 'expiry');
     await storage.delete(key: 'tokenType');
@@ -84,13 +82,8 @@ class UserRepository {
   }
 
   Future<bool> hasHeaders() async {
-    Map<String, String> userHeadersFromStorage = new Map<String, String>();
-    userHeadersFromStorage['accessToken'] =
-        await storage.read(key: 'accessToken');
-    userHeadersFromStorage['uid'] = await storage.read(key: 'uid');
-    userHeadersFromStorage['tokenType'] = await storage.read(key: 'tokenType');
-    userHeadersFromStorage['expiry'] = await storage.read(key: 'expiry');
-    userHeadersFromStorage['client'] = await storage.read(key: 'client');
+    Map<String, String> userHeadersFromStorage =
+        await StorageHeaders.getHeadersFromStorage();
     if (userHeadersFromStorage.values.contains(null)) {
       return false;
     }

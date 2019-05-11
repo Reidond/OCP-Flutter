@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
-import 'user_body.dart';
-import 'user_headers.dart';
+import 'package:rails_api_connection/src/user/user_body.dart';
+import 'package:rails_api_connection/src/user/user_headers.dart';
 
 class User {
   final UserBody userBody;
