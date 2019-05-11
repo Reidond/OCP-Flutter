@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/authentication/index.dart';
-import 'index.dart';
+import '../index.dart';
 
 class SettingsPage extends StatelessWidget {
   final ThemeBloc themeBloc;
