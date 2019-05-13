@@ -10,7 +10,7 @@ class ProductsList extends StatelessWidget {
       bloc: BlocProvider.of<ProductsBloc>(context),
       listener: (BuildContext context, ProductsState state) {
         if (state is ProductShowed) {
-          Navigator.of(context).pushNamed('/show');
+          Navigator.of(context).pushNamed('/product_show');
         }
       },
       child: BlocBuilder(

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_copyright_platform/applications/index.dart';
 import 'package:open_copyright_platform/home2/index.dart';
 import 'package:open_copyright_platform/settings/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
 import '../authentication/index.dart';
-
 import '../bottom_app_bar/index.dart';
-
 import '../products/index.dart';
 
 class Home2Page extends StatefulWidget {
   final productsActions = ProductsActions();
+  final applicationsActions = ApplicationActions();
 
   @override
   State<StatefulWidget> createState() {
@@ -22,6 +21,25 @@ class Home2Page extends StatefulWidget {
 
 class _Home2State extends State<Home2Page> {
   ProductsActions get _productsActions => widget.productsActions;
+
+  ApplicationActions get _applicationActions => widget.applicationsActions;
+
+  ApplicationsBloc _applicationsBloc;
+
+  @override
+  void initState() {
+    _applicationsBloc =
+        ApplicationsBloc(applicationActions: _applicationActions);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _applicationsBloc.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +80,7 @@ class _Home2State extends State<Home2Page> {
               ListTile(
                 title: Text('Applications'),
                 onTap: () {
+                  home2Bloc.dispatch(ApplicationsDrawerButtonPressed());
                   Navigator.pop(context);
                 },
               ),
@@ -80,12 +99,22 @@ class _Home2State extends State<Home2Page> {
               if (state is InitialBottomAppBarState) {
                 return Container(width: 0.0, height: 0.0);
               }
-              if (state is ProductsPageState) {
+              if (state is ShowAddProductsFABState) {
                 return FloatingActionButton.extended(
                   elevation: 4.0,
                   icon: const Icon(Icons.add),
                   label: const Text('Add a product'),
                   onPressed: () {},
+                );
+              }
+              if (state is ShowAddApplicationsFABState) {
+                return FloatingActionButton.extended(
+                  elevation: 4.0,
+                  icon: const Icon(Icons.add),
+                  label: const Text('Add application'),
+                  onPressed: () {
+                    _applicationsBloc.dispatch(AddApplicationFABPress());
+                  },
                 );
               }
             }),
@@ -132,6 +161,10 @@ class _Home2State extends State<Home2Page> {
                       }
                       if (state is ProductsDrawerButton) {
                         return ProductsPage(productsActions: _productsActions);
+                      }
+                      if (state is ApplicationsDrawerButton) {
+                        return ApplicationsPage(
+                            applicationActions: _applicationActions);
                       }
                     },
                   ),

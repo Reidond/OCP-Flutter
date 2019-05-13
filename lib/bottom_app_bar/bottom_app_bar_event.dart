@@ -4,10 +4,17 @@ import 'package:meta/meta.dart';
 @immutable
 abstract class BottomAppBarEvent extends Equatable {}
 
-class BottomAppBarAddProducts extends BottomAppBarEvent {
+class ShowAddProductsFAB extends BottomAppBarEvent {
   @override
   String toString() {
-    return 'BottomAppBarAddProducts';
+    return 'ShowAddProductsFAB';
+  }
+}
+
+class ShowAddApplicationsFAB extends BottomAppBarEvent {
+  @override
+  String toString() {
+    return 'ShowAddApplicationsFAB';
   }
 }
 

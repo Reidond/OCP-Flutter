@@ -8,9 +8,16 @@ abstract class BottomAppBarState extends Equatable {
 
 class InitialBottomAppBarState extends BottomAppBarState {}
 
-class ProductsPageState extends BottomAppBarState {
+class ShowAddProductsFABState extends BottomAppBarState {
   @override
   String toString() {
-    return 'ProductsPageState';
+    return 'ShowAddProductsFABState';
+  }
+}
+
+class ShowAddApplicationsFABState extends BottomAppBarState {
+  @override
+  String toString() {
+    return 'ShowAddApplicationsFABState';
   }
 }

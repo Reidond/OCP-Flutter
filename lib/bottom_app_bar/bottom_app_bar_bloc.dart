@@ -1,5 +1,7 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
+
 import './index.dart';
 
 class BottomAppBarBloc extends Bloc<BottomAppBarEvent, BottomAppBarState> {
@@ -11,8 +13,11 @@ class BottomAppBarBloc extends Bloc<BottomAppBarEvent, BottomAppBarState> {
     if (event is InitialBottomAppBar) {
       yield InitialBottomAppBarState();
     }
-    if (event is BottomAppBarAddProducts) {
-      yield ProductsPageState();
+    if (event is ShowAddProductsFAB) {
+      yield ShowAddProductsFABState();
+    }
+    if (event is ShowAddApplicationsFAB) {
+      yield ShowAddApplicationsFABState();
     }
   }
 }

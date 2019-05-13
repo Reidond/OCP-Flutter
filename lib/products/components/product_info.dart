@@ -35,7 +35,7 @@ class ProductInfoState extends State<ProductInfo> {
           icon: Icon(Icons.arrow_back),
           tooltip: 'Back to products',
           onPressed: () {
-            bottomAppBarBloc.dispatch(BottomAppBarAddProducts());
+            bottomAppBarBloc.dispatch(ShowAddProductsFAB());
             productsBloc.dispatch(Fetch());
             Navigator.of(context).pop();
           },

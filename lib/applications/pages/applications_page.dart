@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_copyright_platform/applications/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
-import 'package:open_copyright_platform/products/index.dart';
 import 'package:open_copyright_platform/settings/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
-class ProductsPage extends StatefulWidget {
-  final ProductsActions productsActions;
+class ApplicationsPage extends StatefulWidget {
+  final ApplicationActions applicationActions;
 
-  ProductsPage({Key key, @required this.productsActions})
-      : assert(productsActions != null),
+  ApplicationsPage({Key key, @required this.applicationActions})
+      : assert(applicationActions != null),
         super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _ProductsPageState();
+    return _ApplicationsPageState();
   }
 }
 
-class _ProductsPageState extends State<ProductsPage> {
-  ProductsActions get _productsActions => widget.productsActions;
+class _ApplicationsPageState extends State<ApplicationsPage> {
+  ApplicationActions get _applicationActions => widget.applicationActions;
 
-  ProductsBloc _productsBloc;
+  ApplicationsBloc _applicationsBloc;
 
   @override
   void initState() {
-    _productsBloc = ProductsBloc(productsActions: _productsActions);
+    _applicationsBloc =
+        ApplicationsBloc(applicationActions: _applicationActions);
 
-    _productsBloc.dispatch(Fetch());
+    _applicationsBloc.dispatch(ApplicationFetch());
     super.initState();
   }
 
@@ -38,11 +39,11 @@ class _ProductsPageState extends State<ProductsPage> {
 
     final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
 
-    bottomAppBarBloc.dispatch(ShowAddProductsFAB());
+    bottomAppBarBloc.dispatch(ShowAddApplicationsFAB());
 
     return BlocProviderTree(
         blocProviders: [
-          BlocProvider<ProductsBloc>(bloc: _productsBloc),
+          BlocProvider<ApplicationsBloc>(bloc: _applicationsBloc),
           BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc)
         ],
         child: BlocBuilder(
@@ -51,8 +52,9 @@ class _ProductsPageState extends State<ProductsPage> {
             return MaterialApp(
               theme: theme,
               routes: {
-                '/': (context) => ProductsList(),
-                '/product_show': (context) => ProductsShow(),
+                '/': (context) => ApplicationList(),
+                '/application_show': (context) => ApplicationsShow(),
+                '/application_add': (context) => ApplicationsAdd()
               },
               initialRoute: '/',
             );
@@ -62,7 +64,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   void dispose() {
-    _productsBloc.dispose();
+    _applicationsBloc.dispose();
     super.dispose();
   }
 }
