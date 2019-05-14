@@ -20,6 +20,9 @@ class _ApplicationFormState extends State<ApplicationForm> {
   // Note: This is a GlobalKey<FormState>, not a GlobalKey<MyCustomFormState>!
   final _formKey = GlobalKey<FormState>();
 
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final BottomAppBarBloc bottomAppBarBloc =
@@ -44,31 +47,51 @@ class _ApplicationFormState extends State<ApplicationForm> {
             ),
             body: Form(
               key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 24.0),
                 children: <Widget>[
+                  SizedBox(height: 40.0),
                   TextFormField(
+                    decoration: new InputDecoration(
+                      labelText: "Title",
+                      border: new OutlineInputBorder(),
+                    ),
+                    controller: _titleController,
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter some text';
                       }
                     },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: RaisedButton(
-                      onPressed: () {
-                        // Validate will return true if the form is valid, or false if
-                        // the form is invalid.
-                        if (_formKey.currentState.validate()) {
-                          // If the form is valid, we want to show a Snackbar
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text('Processing Data')));
-                        }
-                      },
-                      child: Text('Submit'),
-                    ),
+                  SizedBox(height: 12.0),
+                  TextFormField(
+                    decoration: new InputDecoration(
+                        labelText: "Description",
+                        border: new OutlineInputBorder()),
+                    controller: _descriptionController,
+                    obscureText: true,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                    },
                   ),
+                  ButtonBar(
+                    children: <Widget>[
+                      RaisedButton(
+                        child: Text('Create'),
+                        onPressed: () {
+                          // Validate will return true if the form is valid, or false if
+                          // the form is invalid.
+                          if (_formKey.currentState.validate()) {
+                            // If the form is valid, we want to show a Snackbar
+                            Scaffold.of(context).showSnackBar(
+                                SnackBar(content: Text('Processing Data')));
+                          }
+                        },
+                      )
+                    ],
+                  )
                 ],
               ),
             )));
