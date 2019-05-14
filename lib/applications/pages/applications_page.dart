@@ -19,16 +19,8 @@ class ApplicationsPage extends StatefulWidget {
 }
 
 class _ApplicationsPageState extends State<ApplicationsPage> {
-  ApplicationActions get _applicationActions => widget.applicationActions;
-
-  ApplicationsBloc _applicationsBloc;
-
   @override
   void initState() {
-    _applicationsBloc =
-        ApplicationsBloc(applicationActions: _applicationActions);
-
-    _applicationsBloc.dispatch(ApplicationFetch());
     super.initState();
   }
 
@@ -37,13 +29,18 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
     final BottomAppBarBloc bottomAppBarBloc =
         BlocProvider.of<BottomAppBarBloc>(context);
 
+    final ApplicationsBloc applicationsBloc =
+        BlocProvider.of<ApplicationsBloc>(context);
+
     final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
 
     bottomAppBarBloc.dispatch(ShowAddApplicationsFAB());
 
+    applicationsBloc.dispatch(ApplicationFetch());
+
     return BlocProviderTree(
         blocProviders: [
-          BlocProvider<ApplicationsBloc>(bloc: _applicationsBloc),
+          BlocProvider<ApplicationsBloc>(bloc: applicationsBloc),
           BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc)
         ],
         child: BlocBuilder(
@@ -53,8 +50,7 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
               theme: theme,
               routes: {
                 '/': (context) => ApplicationList(),
-                '/application_show': (context) => ApplicationsShow(),
-                '/application_add': (context) => ApplicationsAdd()
+                '/application_show': (context) => ApplicationsShow()
               },
               initialRoute: '/',
             );
@@ -64,7 +60,6 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
 
   @override
   void dispose() {
-    _applicationsBloc.dispose();
     super.dispose();
   }
 }

@@ -42,6 +42,10 @@ class ApplicationsBloc extends Bloc<ApplicationsEvent, ApplicationsState> {
           final applications = await applicationActions.fetchApplications();
           yield ApplicationsLoaded(applications: applications);
         }
+        if (currentState is AddApplicationFABPressed) {
+          final applications = await applicationActions.fetchApplications();
+          yield ApplicationsLoaded(applications: applications);
+        }
       } catch (_) {
         yield ApplicationsError();
       }

@@ -12,9 +12,6 @@ class ApplicationList extends StatelessWidget {
         if (state is ApplicationShowed) {
           Navigator.of(context).pushNamed('/application_show');
         }
-        if (state is AddApplicationFABPressed) {
-          Navigator.of(context).pushNamed('/application_add');
-        }
       },
       child: BlocBuilder(
         bloc: BlocProvider.of<ApplicationsBloc>(context),

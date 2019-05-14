@@ -114,6 +114,11 @@ class _Home2State extends State<Home2Page> {
                   label: const Text('Add application'),
                   onPressed: () {
                     _applicationsBloc.dispatch(AddApplicationFABPress());
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ApplicationsAdd(
+                              bottomAppBarBloc: bottomAppBarBloc,
+                              applicationsBloc: _applicationsBloc,
+                            )));
                   },
                 );
               }
@@ -146,7 +151,8 @@ class _Home2State extends State<Home2Page> {
         body: BlocProviderTree(
             blocProviders: [
               BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc),
-              BlocProvider<ThemeBloc>(bloc: _themeBloc)
+              BlocProvider<ThemeBloc>(bloc: _themeBloc),
+              BlocProvider<ApplicationsBloc>(bloc: _applicationsBloc)
             ],
             child: BlocBuilder(
               bloc: _themeBloc,
