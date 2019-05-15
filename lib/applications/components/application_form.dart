@@ -1,8 +1,8 @@
-// Create a Form Widget
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/applications/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
+import 'package:open_copyright_platform/products/index.dart';
 
 class ApplicationForm extends StatefulWidget {
   @override
@@ -11,13 +11,7 @@ class ApplicationForm extends StatefulWidget {
   }
 }
 
-// Create a corresponding State class. This class will hold the data related to
-// the form.
 class _ApplicationFormState extends State<ApplicationForm> {
-  // Create a global key that will uniquely identify the Form widget and allow
-  // us to validate the form
-  //
-  // Note: This is a GlobalKey<FormState>, not a GlobalKey<MyCustomFormState>!
   final _formKey = GlobalKey<FormState>();
 
   final _titleController = TextEditingController();
@@ -30,6 +24,8 @@ class _ApplicationFormState extends State<ApplicationForm> {
 
     final ApplicationsBloc applicationsBloc =
         BlocProvider.of<ApplicationsBloc>(context);
+
+    final ProductsBloc productsBloc = BlocProvider.of<ProductsBloc>(context);
 
     return Container(
         child: Scaffold(
@@ -50,7 +46,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
               child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: 24.0),
                 children: <Widget>[
-                  SizedBox(height: 40.0),
+                  SizedBox(height: 24.0),
                   TextFormField(
                     decoration: new InputDecoration(
                       labelText: "Title",
@@ -76,6 +72,26 @@ class _ApplicationFormState extends State<ApplicationForm> {
                       }
                     },
                   ),
+                  SizedBox(height: 12.0),
+                  Card(
+                      child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      BlocBuilder(
+                        bloc: productsBloc,
+                        builder: (BuildContext context, ProductsState state) {
+                          return ListTile(
+                              onTap: () {
+                                _settingModalBottomSheet(context, productsBloc);
+                              },
+                              title: Text('No product choosen',
+                                  style: TextStyle(fontSize: 16.0)),
+                              subtitle: Text('Tap to choose product'),
+                              dense: true);
+                        },
+                      )
+                    ],
+                  )),
                   ButtonBar(
                     children: <Widget>[
                       RaisedButton(
@@ -96,4 +112,31 @@ class _ApplicationFormState extends State<ApplicationForm> {
               ),
             )));
   }
+}
+
+void _settingModalBottomSheet(context, productsBloc) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return BlocBuilder(
+          bloc: productsBloc,
+          builder: (BuildContext context, ProductsState state) {
+            return Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  new ListTile(
+                    leading: new Icon(Icons.videocam),
+                    title: new Text('Video'),
+                    onTap: () => {},
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      });
 }
