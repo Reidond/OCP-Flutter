@@ -116,6 +116,7 @@ class _Home2State extends State<Home2Page> {
                     _applicationsBloc.dispatch(AddApplicationFABPress());
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ApplicationsAdd(
+                              productsActions: _productsActions,
                               bottomAppBarBloc: bottomAppBarBloc,
                               applicationsBloc: _applicationsBloc,
                             )));
