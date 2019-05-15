@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:open_copyright_platform/applications/applications_state.dart';
+import 'package:open_copyright_platform/applications/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
 import './index.dart';
@@ -63,7 +63,6 @@ class ApplicationsBloc extends Bloc<ApplicationsEvent, ApplicationsState> {
           yield ApplicationsLoaded(applications: applications);
         }
       } catch (_) {
-        yield ApplicationsError();
         yield ApplicationShowError();
       }
     }
