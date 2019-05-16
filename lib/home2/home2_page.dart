@@ -113,7 +113,7 @@ class _Home2State extends State<Home2Page> {
                   icon: const Icon(Icons.add),
                   label: const Text('Add application'),
                   onPressed: () {
-                    _applicationsBloc.dispatch(AddApplicationFABPress());
+                    _applicationsBloc.dispatch(AddApplication());
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ApplicationsAdd(
                               productsActions: _productsActions,
