@@ -36,7 +36,7 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
 
     bottomAppBarBloc.dispatch(ShowAddApplicationsFAB());
 
-    applicationsBloc.dispatch(ApplicationFetch());
+    applicationsBloc.dispatch(FetchApplications());
 
     return BlocProviderTree(
         blocProviders: [

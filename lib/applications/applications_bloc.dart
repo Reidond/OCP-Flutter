@@ -18,13 +18,13 @@ class ApplicationsBloc extends Bloc<ApplicationsEvent, ApplicationsState> {
 
   @override
   Stream<ApplicationsState> mapEventToState(ApplicationsEvent event) async* {
-    if (event is InitialApplicationsEvent) {
+    if (event is ApplicationsInit) {
       yield ApplicationsUninitialized();
     }
-    if (event is InitialApplicationShowEvent) {
+    if (event is ShowApplicationInit) {
       yield ApplicationShowUninitialized();
     }
-    if (event is ApplicationFetch) {
+    if (event is FetchApplications) {
       try {
         if (currentState is ApplicationsUninitialized) {
           final applications = await applicationActions.fetchApplications();
@@ -50,7 +50,7 @@ class ApplicationsBloc extends Bloc<ApplicationsEvent, ApplicationsState> {
         yield ApplicationsError();
       }
     }
-    if (event is ApplicationShow) {
+    if (event is ShowApplication) {
       yield ApplicationShowed();
       try {
         if (currentState is ApplicationShowed) {
@@ -66,7 +66,7 @@ class ApplicationsBloc extends Bloc<ApplicationsEvent, ApplicationsState> {
         yield ApplicationShowError();
       }
     }
-    if (event is AddApplicationFABPress) {
+    if (event is AddApplication) {
       yield AddApplicationFABPressed();
     }
   }

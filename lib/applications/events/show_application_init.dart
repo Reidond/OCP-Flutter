@@ -1,8 +1,8 @@
 import 'package:open_copyright_platform/applications/applications_event.dart';
 
-class InitialApplicationShowEvent extends ApplicationsEvent {
+class ShowApplicationInit extends ApplicationsEvent {
   @override
   String toString() {
-    return 'InitialApplicationShowEvent';
+    return 'ShowApplicationInit';
   }
 }

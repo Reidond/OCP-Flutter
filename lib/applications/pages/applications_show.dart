@@ -18,7 +18,7 @@ class ApplicationsShow extends StatelessWidget {
     return WillPopScope(
         onWillPop: () {
           bottomAppBarBloc.dispatch(ShowAddApplicationsFAB());
-          applicationsBloc.dispatch(ApplicationFetch());
+          applicationsBloc.dispatch(FetchApplications());
           Navigator.of(context).pop();
         },
         child: BlocProviderTree(

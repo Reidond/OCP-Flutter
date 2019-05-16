@@ -41,7 +41,7 @@ class _ApplicationsAddState extends State<ApplicationsAdd> {
     return WillPopScope(
         onWillPop: () {
           widget.bottomAppBarBloc.dispatch(ShowAddApplicationsFAB());
-          widget.applicationsBloc.dispatch(ApplicationFetch());
+          widget.applicationsBloc.dispatch(FetchApplications());
           Navigator.of(context).pop();
         },
         child: BlocProviderTree(

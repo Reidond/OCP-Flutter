@@ -37,7 +37,7 @@ class ApplicationInfoState extends State<ApplicationInfo> {
           tooltip: 'Back to applications',
           onPressed: () {
             bottomAppBarBloc.dispatch(ShowAddApplicationsFAB());
-            applicationsBloc.dispatch(ApplicationFetch());
+            applicationsBloc.dispatch(FetchApplications());
             Navigator.of(context).pop();
           },
         ),

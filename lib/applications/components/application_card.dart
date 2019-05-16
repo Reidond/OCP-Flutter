@@ -30,7 +30,7 @@ class ApplicationCardState extends State<ApplicationCard> {
             ListTile(
                 onTap: () {
                   BlocProvider.of<ApplicationsBloc>(context)
-                      .dispatch(ApplicationShow(id: application.id));
+                      .dispatch(ShowApplication(id: application.id));
                 },
                 leading: Text(application.status.toString(),
                     style: TextStyle(fontSize: 12.0)),
