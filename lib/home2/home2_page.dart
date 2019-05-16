@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/applications/index.dart';
+import 'package:open_copyright_platform/auth/index.dart';
+import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:open_copyright_platform/home2/index.dart';
+import 'package:open_copyright_platform/products/index.dart';
 import 'package:open_copyright_platform/settings/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
-
-import '../authentication/index.dart';
-import '../bottom_app_bar/index.dart';
-import '../products/index.dart';
 
 class Home2Page extends StatefulWidget {
   final productsActions = ProductsActions();
@@ -43,8 +42,7 @@ class _Home2State extends State<Home2Page> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationBloc authenticationBloc =
-        BlocProvider.of<AuthenticationBloc>(context);
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
 
     final BottomAppBarBloc bottomAppBarBloc =
         BlocProvider.of<BottomAppBarBloc>(context);
@@ -142,7 +140,7 @@ class _Home2State extends State<Home2Page> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => SettingsPage(
                             themeBloc: _themeBloc,
-                            authenticationBloc: authenticationBloc,
+                            authBloc: authBloc,
                           )));
                 },
               )

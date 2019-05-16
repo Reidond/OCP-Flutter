@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_copyright_platform/auth/index.dart';
+import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:open_copyright_platform/dashboard/index.dart';
 import 'package:open_copyright_platform/home2/index.dart';
 import 'package:open_copyright_platform/settings/index.dart';
-
-import '../authentication/index.dart';
-
-import '../bottom_app_bar/index.dart';
-
-import '../products/index.dart';
 
 class DashBoardPage extends StatefulWidget {
   @override
@@ -45,8 +41,7 @@ class _DashBoardState extends State<DashBoardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationBloc authenticationBloc =
-        BlocProvider.of<AuthenticationBloc>(context);
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
 
     final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
 
@@ -57,7 +52,7 @@ class _DashBoardState extends State<DashBoardPage> {
         body: BlocProviderTree(
             blocProviders: [
               BlocProvider<Home2Bloc>(bloc: _home2bloc),
-              BlocProvider<AuthenticationBloc>(bloc: authenticationBloc),
+              BlocProvider<AuthBloc>(bloc: authBloc),
               BlocProvider<BottomAppBarBloc>(bloc: _bottomAppBarBloc),
               BlocProvider<ThemeBloc>(bloc: _themeBloc)
             ],

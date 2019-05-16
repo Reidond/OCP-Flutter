@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
-import 'package:open_copyright_platform/authentication/index.dart';
+import 'package:open_copyright_platform/auth/index.dart';
 import 'package:open_copyright_platform/login/index.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,16 +21,16 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   LoginBloc _loginBloc;
-  AuthenticationBloc _authenticationBloc;
+  AuthBloc _authBloc;
 
   UserRepository get _userRepository => widget.userRepository;
 
   @override
   void initState() {
-    _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    _authBloc = BlocProvider.of<AuthBloc>(context);
     _loginBloc = LoginBloc(
       userRepository: _userRepository,
-      authenticationBloc: _authenticationBloc,
+      authBloc: _authBloc,
     );
     super.initState();
   }
@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: LoginForm(
-        authenticationBloc: _authenticationBloc,
+        authBloc: _authBloc,
         loginBloc: _loginBloc,
       ),
     );
