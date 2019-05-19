@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_copyright_platform/application_actions/index.dart';
 import 'package:open_copyright_platform/applications/index.dart';
 import 'package:open_copyright_platform/auth/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_copyright_platform/application_actions/components/index.dart';
 import 'package:open_copyright_platform/applications/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:open_copyright_platform/products/index.dart';
@@ -10,7 +11,11 @@ class ApplicationsAdd extends StatefulWidget {
   final ApplicationsBloc applicationsBloc;
   final ProductsActions productsActions;
 
-  ApplicationsAdd({Key key, this.productsActions, this.bottomAppBarBloc, this.applicationsBloc})
+  ApplicationsAdd(
+      {Key key,
+      this.productsActions,
+      this.bottomAppBarBloc,
+      this.applicationsBloc})
       : super(key: key);
 
   @override
@@ -23,14 +28,14 @@ class _ApplicationsAddState extends State<ApplicationsAdd> {
   @override
   void initState() {
     _productsBloc = new ProductsBloc(productsActions: widget.productsActions);
-    
+
     super.initState();
   }
 
   @override
   void dispose() {
     _productsBloc.dispose();
-    
+
     super.dispose();
   }
 
