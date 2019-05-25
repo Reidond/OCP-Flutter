@@ -12,3 +12,14 @@ class WantToSelectProduct extends ApplicationActionsEvent {
     return 'WantToSelectProduct';
   }
 }
+
+class TapOnProductSelect extends ApplicationActionsEvent {
+  final int id;
+
+  TapOnProductSelect({@required this.id}) : super([id]);
+
+  @override
+  String toString() {
+    return 'TapOnProductSelect { $id }';
+  }
+}

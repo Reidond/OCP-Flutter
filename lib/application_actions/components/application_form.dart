@@ -124,15 +124,86 @@ void _settingModalBottomSheet(context, productsBloc) {
             return Container(
               child: new Wrap(
                 children: <Widget>[
-                  new ListTile(
+                  ListTile(
                       leading: new Icon(Icons.music_note),
                       title: new Text('Music'),
                       onTap: () => {}),
-                  new ListTile(
-                    leading: new Icon(Icons.videocam),
-                    title: new Text('Video'),
-                    onTap: () => {},
-                  ),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {}),
+                  ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Music'),
+                      onTap: () => {})
                 ],
               ),
             );
