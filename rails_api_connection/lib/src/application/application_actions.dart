@@ -32,7 +32,7 @@ class ApplicationActions {
               createdAt: rawProduct['created_at'],
               updatedAt: rawProduct['updated_at'],
               productId: rawProduct['product_id'],
-              tasks: rawProduct['tasks']);
+              tasks: _mapTasks(rawProduct['tasks']));
         }).toList();
       } else {
         throw Exception('Success is false');
@@ -40,6 +40,18 @@ class ApplicationActions {
     } else {
       throw Exception('Error fetching posts');
     }
+  }
+
+  List<ApplicationTask> _mapTasks(data) {
+    var applicationTasks = new List<ApplicationTask>();
+    data.forEach((task) => applicationTasks.add(new ApplicationTask(
+        id: task['id'],
+        copyrightApplicationId: task['copyright_application_id'],
+        title: task['title'],
+        done: task['done'],
+        createdAt: task['created_at'],
+        updatedAt: task['updated_at'])));
+    return applicationTasks;
   }
 
   Future<Application> showApplication(int id) async {
@@ -70,5 +82,33 @@ class ApplicationActions {
     } else {
       throw Exception('Error fetching posts');
     }
+  }
+
+  Future<bool> createApplication({productId, title, description, tasks}) async {
+    final res =
+        await http.post('${AppConfig.API_BASE}/api/v1/copyright_applications',
+            body: {
+              'product_id': productId,
+              'title': title,
+              'description': description,
+              'tasks': jsonEncode(tasks)
+            },
+            headers: await StorageHeaders.getHeadersFromStorage());
+
+    if (res.statusCode == 201) {
+      final responseBody = json.decode(res.body);
+      if (responseBody['success'] == true) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  void storeProductId({id}) async {
+    final storage = new FlutterSecureStorage();
+    await storage.write(key: 'product_id', value: id.toString());
   }
 }

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/application_actions/components/index.dart';
+import 'package:open_copyright_platform/application_actions/index.dart';
 import 'package:open_copyright_platform/applications/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
-import 'package:open_copyright_platform/products/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
 class ApplicationsAdd extends StatefulWidget {
   final BottomAppBarBloc bottomAppBarBloc;
   final ApplicationsBloc applicationsBloc;
+  final applicationActions = ApplicationActions();
   final ProductsActions productsActions;
 
   ApplicationsAdd(
@@ -23,18 +24,20 @@ class ApplicationsAdd extends StatefulWidget {
 }
 
 class _ApplicationsAddState extends State<ApplicationsAdd> {
-  ProductsBloc _productsBloc;
+  ApplicationActionsBloc _applicationActionsBloc;
 
   @override
   void initState() {
-    _productsBloc = new ProductsBloc(productsActions: widget.productsActions);
+    _applicationActionsBloc = new ApplicationActionsBloc(
+        productsActions: widget.productsActions,
+        applicationActions: widget.applicationActions);
 
     super.initState();
   }
 
   @override
   void dispose() {
-    _productsBloc.dispose();
+    _applicationActionsBloc.dispose();
 
     super.dispose();
   }
@@ -53,13 +56,33 @@ class _ApplicationsAddState extends State<ApplicationsAdd> {
             blocProviders: [
               BlocProvider<ApplicationsBloc>(bloc: widget.applicationsBloc),
               BlocProvider<BottomAppBarBloc>(bloc: widget.bottomAppBarBloc),
-              BlocProvider<ProductsBloc>(bloc: _productsBloc)
+              BlocProvider<ApplicationActionsBloc>(
+                  bloc: _applicationActionsBloc)
             ],
-            child: BlocBuilder(
-              bloc: widget.applicationsBloc,
-              builder: (BuildContext context, ApplicationsState state) {
-                return ApplicationForm();
-              },
-            )));
+            child: BlocListener(
+                bloc: _applicationActionsBloc,
+                listener:
+                    (BuildContext context, ApplicationActionsState state) {
+                  if (state is ApplicationCreated) {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text('Application created!'),
+                      backgroundColor: Colors.greenAccent,
+                      duration: Duration(seconds: 5),
+                    ));
+                  }
+                  if (state is ApplicationNotCreated) {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text('Application does not created!'),
+                      backgroundColor: Colors.redAccent,
+                      duration: Duration(seconds: 5),
+                    ));
+                  }
+                },
+                child: BlocBuilder(
+                  bloc: widget.applicationsBloc,
+                  builder: (BuildContext context, ApplicationsState state) {
+                    return ApplicationForm();
+                  },
+                ))));
   }
 }

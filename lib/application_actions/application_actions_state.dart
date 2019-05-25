@@ -59,3 +59,17 @@ class BottomSelectError extends ApplicationActionsState {
     return 'BottomSelectUninitialized';
   }
 }
+
+class ApplicationCreated extends ApplicationActionsState {
+  @override
+  String toString() {
+    return 'ApplicationCreated';
+  }
+}
+
+class ApplicationNotCreated extends ApplicationActionsState {
+  @override
+  String toString() {
+    return 'ApplicationNotCreated';
+  }
+}

@@ -4,24 +4,28 @@
 		"name": "OCP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
-	"item": [{
+	"item": [
+		{
 			"name": "AUTHENTICATION CONTROLLER",
-			"item": [{
+			"item": [
+				{
 					"name": "SIGN UP",
 					"request": {
 						"method": "POST",
-						"header": [{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}],
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"email\": \"customer2@test.com\",\n\t\"password\": \"customer123\",\n\t\"password_confirmation\": \"customer123\"\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/auth",
+							"raw": "http://127.0.0.1:3000/auth",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -41,18 +45,20 @@
 					"name": "SIGN IN",
 					"request": {
 						"method": "POST",
-						"header": [{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}],
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"email\": \"director@mail.com\",\n    \"password\": \"384a7613d3f1c3d1\"\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/auth/sign_in",
+							"raw": "http://127.0.0.1:3000/auth/sign_in",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -73,7 +79,8 @@
 					"name": "SIGN OUT",
 					"request": {
 						"method": "DELETE",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
 								"type": "text"
@@ -104,7 +111,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/auth/sign_out",
+							"raw": "http://127.0.0.1:3000/auth/sign_out",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -123,7 +130,8 @@
 				}
 			],
 			"description": "ADMIN\n{\n\t\"name\": \"admin123\",\n  \t\"password\": \"admin123\"\n}\n\nDIRECTOR\n{\n    \"email\": \"director@mail.com\",\n    \"password\": \"384a7613d3f1c3d1\"\n}\n\nEXECUTOR\n{\n\t\"email\": \"execotor@mail.com\",\n\t\"password\": \"executor123\"\n}\n\nSECRETARY\n{\n\t\"email\": \"secretary@mail.com\",\n\t\"password\": \"secretary123\"\n}\n\nCUSTOMER\n{\n\t\"email\": \"customer@mail.com\",\n\t\"password\": \"customer123\"\n}",
-			"event": [{
+			"event": [
+				{
 					"listen": "prerequest",
 					"script": {
 						"id": "d8fc20f7-7df9-4662-8c9c-261f6c8eb826",
@@ -147,41 +155,46 @@
 		},
 		{
 			"name": "ADMIN CONTROLLER",
-			"item": [{
-				"name": "ADMIN CREATE DIRECTOR",
-				"request": {
-					"method": "POST",
-					"header": [{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}],
-					"body": {
-						"mode": "raw",
-						"raw": "{\n\t\"name\": \"admin123\",\n  \t\"password\": \"admin123\",\n  \t\"email\": \"director@mail.com\"\n}"
-					},
-					"url": {
-						"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/admin/directors",
-						"protocol": "http",
-						"host": [
-							"127",
-							"0",
-							"0",
-							"1"
+			"item": [
+				{
+					"name": "ADMIN CREATE DIRECTOR",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
 						],
-						"port": "3000",
-						"path": [
-							"api",
-							"v1",
-							"admin",
-							"directors"
-						]
-					}
-				},
-				"response": []
-			}],
-			"event": [{
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"admin123\",\n  \t\"password\": \"admin123\",\n  \t\"email\": \"director@mail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/api/v1/admin/directors",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"directors"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
 					"listen": "prerequest",
 					"script": {
 						"id": "3090154a-3b74-4bd9-877e-047fa8983afb",
@@ -205,11 +218,13 @@
 		},
 		{
 			"name": "DIRECTOR CONTROLLER",
-			"item": [{
+			"item": [
+				{
 					"name": "DIRECTOR LIST USERS",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "Content-Type",
 								"value": " application/json; charset=utf-8",
 								"type": "text"
@@ -245,7 +260,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/users",
+							"raw": "http://127.0.0.1:3000/api/v1/director/users",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -268,7 +283,8 @@
 					"name": "DIRECTOR CREATE EXECUTOR",
 					"request": {
 						"method": "POST",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": " AO2ySkxnuHubmKzzGsIs3A",
 								"type": "text"
@@ -305,7 +321,7 @@
 							"raw": "{\n\t\"email\": \"execotor@test.com\",\n\t\"password\": \"executor123\",\n\t\"password_confirmation\": \"executor123\",\n\t\"type\": \"executor\"\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/users",
+							"raw": "http://127.0.0.1:3000/api/v1/director/users",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -328,7 +344,8 @@
 					"name": "DIRECTOR CREATE SECRETARY",
 					"request": {
 						"method": "POST",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": " AO2ySkxnuHubmKzzGsIs3A",
 								"type": "text"
@@ -365,7 +382,7 @@
 							"raw": "{\n\t\"email\": \"secretary@test.com\",\n\t\"password\": \"secretary123\",\n\t\"password_confirmation\": \"secretary123\",\n\t\"type\": \"secretary\"\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/users",
+							"raw": "http://127.0.0.1:3000/api/v1/director/users",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -388,7 +405,8 @@
 					"name": "DIRECTOR DESTROY USERS",
 					"request": {
 						"method": "DELETE",
-						"header": [{
+						"header": [
+							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
@@ -424,7 +442,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/users/9",
+							"raw": "http://127.0.0.1:3000/api/v1/director/users/9",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -448,7 +466,8 @@
 					"name": "APPLICATIONS ACCEPT",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "bRRN5GJRpKuWOcoBStnYJw",
 								"type": "text"
@@ -479,7 +498,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/copyright_applications/accept/1",
+							"raw": "http://127.0.0.1:3000/api/v1/director/copyright_applications/accept/1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -504,7 +523,8 @@
 					"name": "APPLICATIONS DECLINE",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "bRRN5GJRpKuWOcoBStnYJw",
 								"type": "text"
@@ -535,7 +555,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/director/copyright_applications/decline/1",
+							"raw": "http://127.0.0.1:3000/api/v1/director/copyright_applications/decline/1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -557,7 +577,8 @@
 					"response": []
 				}
 			],
-			"event": [{
+			"event": [
+				{
 					"listen": "prerequest",
 					"script": {
 						"id": "5bef0ca2-8699-4142-8c20-fb9d89272113",
@@ -581,11 +602,13 @@
 		},
 		{
 			"name": "PRODUCTS CONTROLLER",
-			"item": [{
+			"item": [
+				{
 					"name": "PRODUCTS LIST",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
 								"type": "text"
@@ -616,7 +639,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/products",
+							"raw": "http://127.0.0.1:3000/api/v1/products",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -638,7 +661,8 @@
 					"name": "PRODUCTS SHOW",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "hUvXXUonp79qMDkpt_FHFw",
 								"type": "text"
@@ -669,7 +693,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/products/1",
+							"raw": "http://127.0.0.1:3000/api/v1/products/1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -692,7 +716,8 @@
 					"name": "PRODUCTS CREATE",
 					"request": {
 						"method": "POST",
-						"header": [{
+						"header": [
+							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
@@ -728,7 +753,7 @@
 							"raw": "{\n\t\"name\": \"Product\",\t\n\t\"description\": \"Description\",\n\t\"product_type\": 1\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/products",
+							"raw": "http://127.0.0.1:3000/api/v1/products",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -750,7 +775,8 @@
 					"name": "PRODUCTS UPDATE",
 					"request": {
 						"method": "PUT",
-						"header": [{
+						"header": [
+							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
@@ -786,7 +812,7 @@
 							"raw": "{\n\t\"name\": \"Product Update\",\n\t\"description\": \"Description Update\",\n\t\"product_type\": 2\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/products/2",
+							"raw": "http://127.0.0.1:3000/api/v1/products/2",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -809,7 +835,8 @@
 					"name": "PRODUCTS DELETE",
 					"request": {
 						"method": "DELETE",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
 								"type": "text"
@@ -840,7 +867,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/products/6",
+							"raw": "http://127.0.0.1:3000/api/v1/products/6",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -863,11 +890,13 @@
 		},
 		{
 			"name": "APPLICATIONS CONTROLLER",
-			"item": [{
+			"item": [
+				{
 					"name": "APPLICATIONS LIST",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
 								"type": "text"
@@ -898,7 +927,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications",
+							"raw": "http://127.0.0.1:3000/api/v1/copyright_applications",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -920,7 +949,8 @@
 					"name": "APPLICATIONS SHOW",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
 								"type": "text"
@@ -951,7 +981,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/21",
+							"raw": "http://127.0.0.1:3000/api/v1/copyright_applications/21",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -974,7 +1004,8 @@
 					"name": "APPLICATIONS CREATE",
 					"request": {
 						"method": "POST",
-						"header": [{
+						"header": [
+							{
 								"key": "Content-Type",
 								"name": "Content-Type",
 								"value": "application/json",
@@ -1011,7 +1042,7 @@
 							"raw": "{\n    \"product_id\": \"1\",\n    \"title\": \"Application\",\n    \"description\": \"Description\",\n    \"tasks\": [\n        {\n            \"title\": \"Task\"\n        },\n        {\n            \"title\": \"Task\"\n        }\n    ]\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications",
+							"raw": "http://127.0.0.1:3000/api/v1/copyright_applications",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1033,7 +1064,8 @@
 					"name": "APPLICATIONS UPDATE",
 					"request": {
 						"method": "PUT",
-						"header": [{
+						"header": [
+							{
 								"key": "Content-Type",
 								"name": "Content-Type",
 								"value": "application/json",
@@ -1070,7 +1102,7 @@
 							"raw": "{\n    \"title\": \"Update Title\",\n    \"description\": \"Update Description\"\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/21",
+							"raw": "http://127.0.0.1:3000/api/v1/copyright_applications/21",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1093,7 +1125,8 @@
 					"name": "APPLICATIONS DELETE",
 					"request": {
 						"method": "DELETE",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
 								"type": "text"
@@ -1124,7 +1157,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/22",
+							"raw": "http://127.0.0.1:3000/api/v1/copyright_applications/22",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1147,7 +1180,8 @@
 					"name": "APPLICATIONS SUBMIT",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
 								"type": "text"
@@ -1178,7 +1212,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/submit/1",
+							"raw": "http://127.0.0.1:3000/api/v1/copyright_applications/submit/1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1202,7 +1236,8 @@
 					"name": "APPLICATIONS UNSUBMIT",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "TZoEm_U0MbgeBZMJm8mVXQ",
 								"type": "text"
@@ -1233,7 +1268,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/unsubmit/1",
+							"raw": "http://127.0.0.1:3000/api/v1/copyright_applications/unsubmit/1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1257,11 +1292,13 @@
 		},
 		{
 			"name": "APPLICATION TASK CONTROLLER",
-			"item": [{
+			"item": [
+				{
 					"name": "APPLICATION TASK UPDATE",
 					"request": {
 						"method": "PUT",
-						"header": [{
+						"header": [
+							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
@@ -1297,7 +1334,7 @@
 							"raw": "{\n\t\"title\": \"Update 2 Title Create Controller\"\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/tasks/33",
+							"raw": "http://127.0.0.1:3000/api/v1/copyright_applications/tasks/33",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1321,7 +1358,8 @@
 					"name": "APPLICATION TASK CREATE",
 					"request": {
 						"method": "POST",
-						"header": [{
+						"header": [
+							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
@@ -1357,7 +1395,7 @@
 							"raw": "{\n\t\"title\": \"Title Create Controller\",\n\t\"copyright_application_id\": \"3\"\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/tasks",
+							"raw": "http://127.0.0.1:3000/api/v1/copyright_applications/tasks",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1380,7 +1418,8 @@
 					"name": "APPLICATION TASK DELETE",
 					"request": {
 						"method": "DELETE",
-						"header": [{
+						"header": [
+							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
@@ -1416,7 +1455,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/copyright_applications/tasks/33",
+							"raw": "http://127.0.0.1:3000/api/v1/copyright_applications/tasks/33",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1440,11 +1479,13 @@
 		},
 		{
 			"name": "SECRETARIES CONTROLLER",
-			"item": [{
+			"item": [
+				{
 					"name": "APPLICATIONS ACCEPT",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "bRRN5GJRpKuWOcoBStnYJw",
 								"type": "text"
@@ -1475,7 +1516,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/secretaries/copyright_applications/accept/1",
+							"raw": "http://127.0.0.1:3000/api/v1/secretaries/copyright_applications/accept/1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1500,7 +1541,8 @@
 					"name": "APPLICATIONS DECLINE",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "bRRN5GJRpKuWOcoBStnYJw",
 								"type": "text"
@@ -1531,7 +1573,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/secretaries/copyright_applications/decline/1",
+							"raw": "http://127.0.0.1:3000/api/v1/secretaries/copyright_applications/decline/1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1556,11 +1598,13 @@
 		},
 		{
 			"name": "USER PARAM CONTROLLER",
-			"item": [{
+			"item": [
+				{
 					"name": "USER PARAM CREATE",
 					"request": {
 						"method": "POST",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "hUvXXUonp79qMDkpt_FHFw",
 								"type": "text"
@@ -1597,7 +1641,7 @@
 							"raw": "{\n\t\"first_name\": \"First Name\",\n\t\"last_name\": \"Last Name\",\n\t\"email\": \"Email New\",\n\t\"address\": \"Address\"\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/user/params",
+							"raw": "http://127.0.0.1:3000/api/v1/user/params",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1620,7 +1664,8 @@
 					"name": "USER PARAM SHOW",
 					"request": {
 						"method": "GET",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "hUvXXUonp79qMDkpt_FHFw",
 								"type": "text"
@@ -1651,7 +1696,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/user/params",
+							"raw": "http://127.0.0.1:3000/api/v1/user/params",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1674,7 +1719,8 @@
 					"name": "USER PARAM UPDATE",
 					"request": {
 						"method": "PUT",
-						"header": [{
+						"header": [
+							{
 								"key": "access-token",
 								"value": "hUvXXUonp79qMDkpt_FHFw",
 								"type": "text"
@@ -1711,7 +1757,7 @@
 							"raw": "{\n\t\"first_name\": \"First Name Update\",\n\t\"last_name\": \"Last Name\",\n\t\"email\": \"Email Update\",\n\t\"address\": \"Address\"\n}"
 						},
 						"url": {
-							"raw": "https://open-copyright-platform2.herokuapp.com/api/v1/user/params",
+							"raw": "http://127.0.0.1:3000/api/v1/user/params",
 							"protocol": "http",
 							"host": [
 								"127",

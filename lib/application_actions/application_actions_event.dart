@@ -23,3 +23,22 @@ class TapOnProductSelect extends ApplicationActionsEvent {
     return 'TapOnProductSelect { $id }';
   }
 }
+
+class CreateApplication extends ApplicationActionsEvent {
+  final String productId;
+  final String title;
+  final String description;
+  final tasks;
+
+  CreateApplication(
+      {@required this.productId,
+      @required this.title,
+      @required this.description,
+      @required this.tasks})
+      : super([productId, title, description, tasks]);
+
+  @override
+  String toString() {
+    return 'CreateApplication { $productId, $title, $description }';
+  }
+}
