@@ -13,6 +13,7 @@ dependencies:
   flutter_bloc: ^0.13.0
   meta: ^1.1.6
   equatable: ^0.2.0
+  json_serializable: ^3.0.0
   rails_api_connection:
     path: rails_api_connection
   flutter_secure_storage: ^3.2.0

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
+import 'package:rails_api_connection/src/application/dao/application_dao.dart';
 
 import './index.dart';
 
@@ -44,11 +45,15 @@ class ApplicationActionsBloc
       yield ProductSelected(product: product);
     }
     if (event is CreateApplication) {
-      final isCreated = await applicationActions.createApplication(
+      var application = new ApplicationDao(
           productId: event.productId,
           title: event.title,
           description: event.description,
           tasks: event.tasks);
+
+      final isCreated = await applicationActions.createApplication(
+          '${AppConfig.API_BASE}/api/v1/copyright_applications',
+          body: application.toMap());
 
       if (isCreated) {
         yield ApplicationCreated();
