@@ -21,18 +21,19 @@ class ApplicationActions {
             json.decode(response.body)['copyright_applications'] as List;
         return data.map((rawProduct) {
           return Application(
-              id: rawProduct['id'],
-              customerId: rawProduct['customer_id'],
-              directorId: rawProduct['director_id'],
-              acceptorId: rawProduct['acceptor_id'],
-              executorId: rawProduct['executor_id'],
-              title: rawProduct['title'],
-              description: rawProduct['description'],
-              status: rawProduct['status'],
-              createdAt: rawProduct['created_at'],
-              updatedAt: rawProduct['updated_at'],
-              productId: rawProduct['product_id'],
-              tasks: _mapTasks(rawProduct['tasks']));
+            id: rawProduct['id'],
+            customerId: rawProduct['customer_id'],
+            directorId: rawProduct['director_id'],
+            acceptorId: rawProduct['acceptor_id'],
+            executorId: rawProduct['executor_id'],
+            title: rawProduct['title'],
+            description: rawProduct['description'],
+            status: rawProduct['status'],
+            createdAt: rawProduct['created_at'],
+            updatedAt: rawProduct['updated_at'],
+            productId: rawProduct['product_id'],
+            tasks: _mapTasks(rawProduct['tasks']),
+          );
         }).toList();
       } else {
         throw Exception('Success is false');
@@ -64,18 +65,19 @@ class ApplicationActions {
       if (responseBody['success'] == true) {
         final data = json.decode(response.body)['copyright_application'];
         return Application(
-            id: data['id'],
-            customerId: data['customer_id'],
-            directorId: data['director_id'],
-            acceptorId: data['acceptor_id'],
-            executorId: data['executor_id'],
-            title: data['title'],
-            description: data['description'],
-            status: data['status'],
-            createdAt: data['created_at'],
-            updatedAt: data['updated_at'],
-            productId: data['product_id'],
-            tasks: data['tasks']);
+          id: data['id'],
+          customerId: data['customer_id'],
+          directorId: data['director_id'],
+          acceptorId: data['acceptor_id'],
+          executorId: data['executor_id'],
+          title: data['title'],
+          description: data['description'],
+          status: data['status'],
+          createdAt: data['created_at'],
+          updatedAt: data['updated_at'],
+          productId: data['product_id'],
+          tasks: _mapTasks(data['tasks']),
+        );
       } else {
         throw Exception('Success is false');
       }
@@ -91,7 +93,7 @@ class ApplicationActions {
               'product_id': productId,
               'title': title,
               'description': description,
-              'tasks': jsonEncode(tasks)
+              'tasks': jsonDecode(jsonEncode(tasks))
             },
             headers: await StorageHeaders.getHeadersFromStorage());
 
