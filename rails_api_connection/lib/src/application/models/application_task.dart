@@ -1,24 +1,34 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
-class ApplicationTask extends Equatable {
-  final int id;
-  final int copyrightApplicationId;
-  final String title;
-  final bool done;
-  final String createdAt;
-  final String updatedAt;
+import 'package:json_annotation/json_annotation.dart';
 
-  ApplicationTask(
+part 'application_task.g.dart';
+
+@JsonSerializable(nullable: false)
+class ApplicationTask extends Equatable {
+  int id;
+  int copyrightApplicationId;
+  String _title;
+  bool done;
+  String createdAt;
+  String updatedAt;
+
+  ApplicationTask(this._title,
       {this.id,
       this.copyrightApplicationId,
-      this.title,
       this.done,
       this.createdAt,
       this.updatedAt})
-      : super([id, copyrightApplicationId, title, done, createdAt, updatedAt]);
+      : super([id, copyrightApplicationId, _title, done, createdAt, updatedAt]);
 
   @override
   String toString() {
-    return title;
+    return _title;
   }
+
+  factory ApplicationTask.fromJson(Map<String, dynamic> json) =>
+      _$ApplicationTaskFromJson(json);
+  Map<String, dynamic> toJson() => _$ApplicationTaskToJson(this);
 }

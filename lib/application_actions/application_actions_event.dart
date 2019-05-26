@@ -28,7 +28,7 @@ class CreateApplication extends ApplicationActionsEvent {
   final String productId;
   final String title;
   final String description;
-  final tasks;
+  final List<Map<String, String>> tasks;
 
   CreateApplication(
       {@required this.productId,

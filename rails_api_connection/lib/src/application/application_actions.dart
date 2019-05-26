@@ -46,9 +46,9 @@ class ApplicationActions {
   List<ApplicationTask> _mapTasks(data) {
     var applicationTasks = new List<ApplicationTask>();
     data.forEach((task) => applicationTasks.add(new ApplicationTask(
+        task['title'],
         id: task['id'],
         copyrightApplicationId: task['copyright_application_id'],
-        title: task['title'],
         done: task['done'],
         createdAt: task['created_at'],
         updatedAt: task['updated_at'])));
@@ -86,27 +86,26 @@ class ApplicationActions {
     }
   }
 
-  Future<bool> createApplication({productId, title, description, tasks}) async {
-    final res =
-        await http.post('${AppConfig.API_BASE}/api/v1/copyright_applications',
-            body: {
-              'product_id': productId,
-              'title': title,
-              'description': description,
-              'tasks': jsonDecode(jsonEncode(tasks))
-            },
-            headers: await StorageHeaders.getHeadersFromStorage());
+  Future<bool> createApplication(String url, {Map body}) async {
+    var headers = await StorageHeaders.getHeadersFromStorage();
 
-    if (res.statusCode == 201) {
-      final responseBody = json.decode(res.body);
-      if (responseBody['success'] == true) {
-        return true;
-      } else {
+    headers['content-type'] = 'application/json';
+
+    var jsonEncodedBody = jsonEncode(body);
+
+    return http
+        .post(url, body: jsonEncodedBody, headers: headers)
+        .then((http.Response response) {
+      final int statusCode = response.statusCode;
+
+      if (statusCode < 200 ||
+          statusCode > 400 ||
+          json == null ||
+          json.decode(response.body)['success'] != true) {
         return false;
       }
-    } else {
-      return false;
-    }
+      return true;
+    });
   }
 
   void storeProductId({id}) async {

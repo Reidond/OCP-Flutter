@@ -21,7 +21,7 @@ class _ApplicationFormState extends State<ApplicationForm>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
 
-  List _tasks = new List();
+  var _tasks = new List<Map<String, String>>();
 
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -142,11 +142,6 @@ class _ApplicationFormState extends State<ApplicationForm>
               decoration: new InputDecoration(
                   labelText: "Task", border: new OutlineInputBorder()),
               controller: _taskController,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please enter some text';
-                }
-              },
             ),
             SizedBox(height: 12.0),
             Container(
@@ -173,7 +168,7 @@ class _ApplicationFormState extends State<ApplicationForm>
                   child: Text('Add task'),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                      List newTasks = new List.from(_tasks)
+                      var newTasks = new List<Map<String, String>>.from(_tasks)
                         ..add({'title': _taskController.text});
                       setState(() => _tasks = newTasks);
                     }
