@@ -57,7 +57,6 @@ class _RegisterFormState extends State<RegisterForm> {
                 SizedBox(height: 80.0),
                 Column(
                   children: <Widget>[
-                    // TODO: Make this check better
                     Theme.of(context).backgroundColor ==
                             ThemeData.light().backgroundColor
                         ? Image.asset('assets/logo.png')

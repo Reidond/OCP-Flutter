@@ -1,5 +1,3 @@
-import 'package:rails_api_connection/rails_api_connection.dart';
-
 class ApplicationDao {
   final String productId;
   final String title;

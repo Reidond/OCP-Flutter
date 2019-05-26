@@ -13,8 +13,6 @@ class Application extends Equatable {
   final String createdAt;
   final String updatedAt;
   final int productId;
-
-  // TODO: Make tasks model
   final List<ApplicationTask> tasks;
 
   Application(

@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
-import 'package:rails_api_connection/src/application/dao/application_dao.dart';
 
 import './index.dart';
 
