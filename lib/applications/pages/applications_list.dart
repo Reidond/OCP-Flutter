@@ -28,6 +28,8 @@ class ApplicationList extends StatelessWidget {
               return Center(child: Center(child: Text('No applications')));
             }
             return ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
                 return ApplicationCard(state.applications[index]);
               },

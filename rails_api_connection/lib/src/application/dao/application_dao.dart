@@ -1,8 +1,10 @@
+import 'package:rails_api_connection/rails_api_connection.dart';
+
 class ApplicationDao {
   final String productId;
   final String title;
   final String description;
-  final List<Map<String, String>> tasks;
+  final List<ApplicationTask> tasks;
 
   ApplicationDao({this.productId, this.title, this.description, this.tasks});
 

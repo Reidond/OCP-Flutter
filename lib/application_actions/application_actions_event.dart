@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:rails_api_connection/rails_api_connection.dart';
 
 @immutable
 abstract class ApplicationActionsEvent extends Equatable {
@@ -28,7 +29,7 @@ class CreateApplication extends ApplicationActionsEvent {
   final String productId;
   final String title;
   final String description;
-  final List<Map<String, String>> tasks;
+  final List<ApplicationTask> tasks;
 
   CreateApplication(
       {@required this.productId,

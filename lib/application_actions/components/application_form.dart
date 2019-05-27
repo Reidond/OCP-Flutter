@@ -21,7 +21,7 @@ class _ApplicationFormState extends State<ApplicationForm>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
 
-  var _tasks = new List<Map<String, String>>();
+  var _tasks = new List<ApplicationTask>();
 
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -155,7 +155,7 @@ class _ApplicationFormState extends State<ApplicationForm>
                     children: <Widget>[
                       ListTile(
                           onTap: () {},
-                          title: Text(_tasks[index]['title'],
+                          title: Text(_tasks[index].toString(),
                               style: TextStyle(fontSize: 16.0)),
                           dense: true)
                     ],
@@ -168,8 +168,8 @@ class _ApplicationFormState extends State<ApplicationForm>
                   child: Text('Add task'),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                      var newTasks = new List<Map<String, String>>.from(_tasks)
-                        ..add({'title': _taskController.text});
+                      var newTasks = new List<ApplicationTask>.from(_tasks)
+                        ..add(ApplicationTask(_taskController.text));
                       setState(() => _tasks = newTasks);
                     }
                   },
