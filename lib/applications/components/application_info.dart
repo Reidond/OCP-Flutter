@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_copyright_platform/application_actions/index.dart';
 import 'package:open_copyright_platform/applications/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
@@ -19,6 +20,24 @@ class ApplicationInfoState extends State<ApplicationInfo> {
   Application application;
 
   ApplicationInfoState(this.application);
+
+  ApplicationActionsBloc _applicationActionsBloc;
+
+  @override
+  void initState() {
+    _applicationActionsBloc = new ApplicationActionsBloc(
+        productsActions: ProductsActions(),
+        applicationActions: ApplicationActions());
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _applicationActionsBloc.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,30 +104,64 @@ class ApplicationInfoState extends State<ApplicationInfo> {
               Column(children: <Widget>[
                 Row(
                   children: <Widget>[
-                    _buildSubmitChip(context, application.status)
+                    BlocBuilder(
+                      bloc: _applicationActionsBloc,
+                      builder: (BuildContext context,
+                          ApplicationActionsState state) {
+                        if (state is ApplicationStatusChanged) {
+                          return _buildSubmitChip(state.currentStatus);
+                        } else {
+                          return _buildSubmitChip(application.status);
+                        }
+                      },
+                    )
                   ],
                 )
               ]),
               ButtonTheme.bar(
-                child: ButtonBar(
-                  children: <Widget>[
-                    FlatButton(
-                      child: _buildSubmitButton(context, application.status),
-                      onPressed: () {},
-                    ),
-                    _canEdit(context, application.status),
-                    _canDelete(context, application.status),
-                  ],
+                child: BlocBuilder(
+                  bloc: _applicationActionsBloc,
+                  builder:
+                      (BuildContext context, ApplicationActionsState state) {
+                    if (state is ApplicationStatusChanged) {
+                      return ButtonBar(
+                        children: <Widget>[_statusButton(state.currentStatus)],
+                      );
+                    } else {
+                      return ButtonBar(
+                        children: <Widget>[_statusButton(application.status)],
+                      );
+                    }
+                  },
                 ),
               ),
             ],
+          ),
+        ),
+        Container(
+          child: ListView.separated(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(8.0),
+            itemCount: application.tasks.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                child: ListTile(
+                  title: Text(application.tasks[index].toString()),
+                  trailing: GestureDetector(
+                      child: Icon(Icons.more_vert), onTap: () {}),
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
           ),
         ),
       ]),
     ));
   }
 
-  Widget _buildSubmitButton(BuildContext context, int applicationStatus) {
+  Widget _buildSubmitButtonText(int applicationStatus) {
     switch (applicationStatus) {
       case 10:
         return Text('UNSUBMIT');
@@ -122,81 +175,55 @@ class ApplicationInfoState extends State<ApplicationInfo> {
     return Text('UNKNOWN STATUS');
   }
 
-  Widget _buildSubmitChip(BuildContext context, int applicationStatus) {
-    switch (applicationStatus) {
-      case 10:
-        return Container(
-          child: Chip(
-            backgroundColor: Colors.green,
-            avatar: CircleAvatar(
-                backgroundColor: Colors.green,
-                child: Icon(Icons.check, color: Colors.black87)),
-            label: Text(
-              'Submitted',
-              style: TextStyle(color: Colors.black87),
-            ),
-          ),
-          padding: EdgeInsets.only(left: 15, bottom: 0),
-        );
-        break;
-      case 0:
-      case 1:
-        return Container(
-          child: Chip(
-            backgroundColor: Colors.red,
-            avatar: CircleAvatar(
-                backgroundColor: Colors.red,
-                child: Icon(Icons.cancel, color: Colors.black87)),
-            label: Text(
-              'Unsubmitted',
-              style: TextStyle(color: Colors.black87),
-            ),
-          ),
-          padding: EdgeInsets.only(left: 15),
-        );
-        break;
-    }
+  Widget _chip(text, icon, backgroundColor, foregroundColor) {
     return Container(
       child: Chip(
-        backgroundColor: Colors.red,
+        backgroundColor: backgroundColor,
         avatar: CircleAvatar(
-            backgroundColor: Colors.red,
-            child: Icon(Icons.check, color: Colors.black87)),
+            backgroundColor: backgroundColor,
+            child: Icon(icon, color: foregroundColor)),
         label: Text(
-          'Unknown status',
-          style: TextStyle(color: Colors.black87),
+          text,
+          style: TextStyle(color: foregroundColor),
         ),
       ),
-      padding: EdgeInsets.only(left: 15),
+      padding: EdgeInsets.only(left: 15, bottom: 0),
     );
   }
 
-  Widget _canEdit(BuildContext context, int applicationStatus) {
+  Widget _buildSubmitChip(int applicationStatus) {
     switch (applicationStatus) {
       case 10:
-        return Container();
+        return _chip('Submitted', Icons.check, Colors.green, Colors.black87);
         break;
       case 0:
       case 1:
-        return FlatButton(
-          child: const Text('EDIT'),
-          onPressed: () {},
-        );
+        return _chip('Unsubmitted', Icons.cancel, Colors.red, Colors.black87);
         break;
     }
-    return Container();
+    return _chip(
+        'Unknown status', Icons.warning, Colors.indigo, Colors.black87);
   }
 
-  Widget _canDelete(BuildContext context, int applicationStatus) {
-    switch (applicationStatus) {
+  Widget _statusButton(int currentStatus) {
+    switch (currentStatus) {
       case 10:
-        return Container();
+        return FlatButton(
+          child: _buildSubmitButtonText(currentStatus),
+          onPressed: () {
+            _applicationActionsBloc
+                .dispatch(UnSubmitApplication(id: application.id));
+          },
+        );
         break;
       case 0:
       case 1:
         return FlatButton(
-          child: const Text('DELETE'),
-          onPressed: () {},
+          child: _buildSubmitButtonText(currentStatus),
+          onPressed: () {
+            _applicationActionsBloc
+                .dispatch(SubmitApplication(id: application.id));
+          },
         );
         break;
     }

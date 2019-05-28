@@ -43,3 +43,25 @@ class CreateApplication extends ApplicationActionsEvent {
     return 'CreateApplication { $productId, $title, $description }';
   }
 }
+
+class SubmitApplication extends ApplicationActionsEvent {
+  final int id;
+
+  SubmitApplication({@required this.id}) : super([id]);
+
+  @override
+  String toString() {
+    return 'SubmitApplication { $id }';
+  }
+}
+
+class UnSubmitApplication extends ApplicationActionsEvent {
+  final int id;
+
+  UnSubmitApplication({@required this.id}) : super([id]);
+
+  @override
+  String toString() {
+    return 'UnSubmitApplication { $id }';
+  }
+}

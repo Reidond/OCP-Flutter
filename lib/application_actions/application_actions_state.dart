@@ -73,3 +73,14 @@ class ApplicationNotCreated extends ApplicationActionsState {
     return 'ApplicationNotCreated';
   }
 }
+
+class ApplicationStatusChanged extends ApplicationActionsState {
+  final int currentStatus;
+
+  ApplicationStatusChanged({this.currentStatus}) : super([currentStatus]);
+
+  @override
+  String toString() {
+    return 'ApplicationStatusChanged { $currentStatus }';
+  }
+}

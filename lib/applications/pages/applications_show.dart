@@ -52,7 +52,7 @@ class ApplicationsShow extends StatelessWidget {
                     controller: _scrollController,
                   );
                 }
-                return Center(child: CircularProgressIndicator());
+                return Container();
               },
             )));
   }

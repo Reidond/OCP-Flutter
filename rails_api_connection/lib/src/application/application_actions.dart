@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 import 'package:rails_api_connection/src/app_config.dart';
 import 'package:rails_api_connection/src/storage_headers.dart';
@@ -86,7 +87,7 @@ class ApplicationActions {
     }
   }
 
-  Future<bool> createApplication(String url, {Map body}) async {
+  Future<bool> createApplication({Map body}) async {
     var headers = await StorageHeaders.getHeadersFromStorage();
 
     headers['content-type'] = 'application/json';
@@ -94,7 +95,8 @@ class ApplicationActions {
     var jsonEncodedBody = jsonEncode(body);
 
     return http
-        .post(url, body: jsonEncodedBody, headers: headers)
+        .post('${AppConfig.API_BASE}/api/v1/copyright_applications',
+            body: jsonEncodedBody, headers: headers)
         .then((http.Response response) {
       final int statusCode = response.statusCode;
 
@@ -108,8 +110,53 @@ class ApplicationActions {
     });
   }
 
+  Future<bool> deleteApplication(id) async {
+    var headers = await StorageHeaders.getHeadersFromStorage();
+
+    return http
+        .delete('${AppConfig.API_BASE}/api/v1/copyright_applications/$id',
+            headers: headers)
+        .then((http.Response response) {
+      final int statusCode = response.statusCode;
+
+      if (statusCode < 200 ||
+          statusCode > 400 ||
+          json == null ||
+          json.decode(response.body)['success'] != true) {
+        return false;
+      }
+      return true;
+    });
+  }
+
+  Future<int> changeApplicationStatus(int id, {@required submit}) async {
+    var headers = await StorageHeaders.getHeadersFromStorage();
+
+    return http
+        .get(
+            '${AppConfig.API_BASE}/api/v1/copyright_applications/${submit == true ? 'submit' : 'unsubmit'}/$id',
+            headers: headers)
+        .then((http.Response response) {
+      final int statusCode = response.statusCode;
+
+      if (statusCode < 200 ||
+          statusCode > 400 ||
+          json == null ||
+          json.decode(response.body)['success'] != true) {
+        throw Exception("Submit failed");
+      }
+      return json.decode(response.body)['copyright_application']['status']
+          as int;
+    });
+  }
+
   void storeProductId({id}) async {
     final storage = new FlutterSecureStorage();
     await storage.write(key: 'product_id', value: id.toString());
+  }
+
+  dynamic getProductId() async {
+    final storage = new FlutterSecureStorage();
+    return await storage.read(key: 'product_id');
   }
 }

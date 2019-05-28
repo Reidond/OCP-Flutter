@@ -177,12 +177,9 @@ class _ApplicationFormState extends State<ApplicationForm>
                 RaisedButton(
                   child: Text('Create'),
                   onPressed: () async {
-                    // Validate will return true if the form is valid, or false if
-                    // the form is invalid.
                     if (_formKey.currentState.validate()) {
-                      // If the form is valid, we want to show a Snackbar
                       applicationActionsBloc.dispatch(CreateApplication(
-                          productId: await storage.read(key: 'product_id'),
+                          productId: widget.applicationActions.getProductId(),
                           title: _titleController.text,
                           description: _descriptionController.text,
                           tasks: _tasks));

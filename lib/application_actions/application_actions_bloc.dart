@@ -50,15 +50,24 @@ class ApplicationActionsBloc
           description: event.description,
           tasks: event.tasks);
 
-      final isCreated = await applicationActions.createApplication(
-          '${AppConfig.API_BASE}/api/v1/copyright_applications',
-          body: application.toMap());
+      final isCreated =
+          await applicationActions.createApplication(body: application.toMap());
 
       if (isCreated) {
         yield ApplicationCreated();
       } else {
         yield ApplicationNotCreated();
       }
+    }
+    if (event is SubmitApplication) {
+      final int newStatus = await applicationActions
+          .changeApplicationStatus(event.id, submit: true);
+      yield ApplicationStatusChanged(currentStatus: newStatus);
+    }
+    if (event is UnSubmitApplication) {
+      final int newStatus = await applicationActions
+          .changeApplicationStatus(event.id, submit: false);
+      yield ApplicationStatusChanged(currentStatus: newStatus);
     }
   }
 }

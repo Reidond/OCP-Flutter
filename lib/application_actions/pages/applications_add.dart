@@ -4,19 +4,17 @@ import 'package:open_copyright_platform/application_actions/components/index.dar
 import 'package:open_copyright_platform/application_actions/index.dart';
 import 'package:open_copyright_platform/applications/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
-import 'package:rails_api_connection/rails_api_connection.dart';
 
 class ApplicationsAdd extends StatefulWidget {
   final BottomAppBarBloc bottomAppBarBloc;
   final ApplicationsBloc applicationsBloc;
-  final applicationActions = ApplicationActions();
-  final ProductsActions productsActions;
+  final ApplicationActionsBloc applicationActionsBloc;
 
   ApplicationsAdd(
       {Key key,
-      this.productsActions,
       this.bottomAppBarBloc,
-      this.applicationsBloc})
+      this.applicationsBloc,
+      this.applicationActionsBloc})
       : super(key: key);
 
   @override
@@ -24,38 +22,37 @@ class ApplicationsAdd extends StatefulWidget {
 }
 
 class _ApplicationsAddState extends State<ApplicationsAdd> {
-  ApplicationActionsBloc _applicationActionsBloc;
+  BottomAppBarBloc get _bottomAppBarBloc => widget.bottomAppBarBloc;
+
+  ApplicationsBloc get _applicationsBloc => widget.applicationsBloc;
+
+  ApplicationActionsBloc get _applicationActionsBloc =>
+      widget.applicationActionsBloc;
 
   @override
   void initState() {
-    _applicationActionsBloc = new ApplicationActionsBloc(
-        productsActions: widget.productsActions,
-        applicationActions: widget.applicationActions);
-
     super.initState();
   }
 
   @override
   void dispose() {
-    _applicationActionsBloc.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    widget.bottomAppBarBloc.dispatch(InitialBottomAppBar());
+    _bottomAppBarBloc.dispatch(InitialBottomAppBar());
 
     return WillPopScope(
         onWillPop: () {
-          widget.bottomAppBarBloc.dispatch(ShowAddApplicationsFAB());
-          widget.applicationsBloc.dispatch(FetchApplications());
+          _bottomAppBarBloc.dispatch(ShowAddApplicationsFAB());
+          _applicationsBloc.dispatch(FetchApplications());
           Navigator.of(context).pop();
         },
         child: BlocProviderTree(
             blocProviders: [
-              BlocProvider<ApplicationsBloc>(bloc: widget.applicationsBloc),
-              BlocProvider<BottomAppBarBloc>(bloc: widget.bottomAppBarBloc),
+              BlocProvider<ApplicationsBloc>(bloc: _applicationsBloc),
+              BlocProvider<BottomAppBarBloc>(bloc: _bottomAppBarBloc),
               BlocProvider<ApplicationActionsBloc>(
                   bloc: _applicationActionsBloc)
             ],
@@ -79,7 +76,7 @@ class _ApplicationsAddState extends State<ApplicationsAdd> {
                   }
                 },
                 child: BlocBuilder(
-                  bloc: widget.applicationsBloc,
+                  bloc: _applicationsBloc,
                   builder: (BuildContext context, ApplicationsState state) {
                     return ApplicationForm();
                   },
