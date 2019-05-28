@@ -24,18 +24,26 @@ class _Home2State extends State<Home2Page> {
 
   ApplicationActions get _applicationActions => widget.applicationsActions;
 
+  ApplicationActionsBloc _applicationActionsBloc;
+
   ApplicationsBloc _applicationsBloc;
 
   @override
   void initState() {
-    _applicationsBloc =
-        ApplicationsBloc(applicationActions: _applicationActions);
+    _applicationActionsBloc = ApplicationActionsBloc(
+        productsActions: _productsActions,
+        applicationActions: _applicationActions);
+
+    _applicationsBloc = ApplicationsBloc(_applicationActionsBloc,
+        applicationActions: _applicationActions);
 
     super.initState();
   }
 
   @override
   void dispose() {
+    _applicationActionsBloc.dispose();
+
     _applicationsBloc.dispose();
 
     super.dispose();
@@ -115,9 +123,9 @@ class _Home2State extends State<Home2Page> {
                     _applicationsBloc.dispatch(AddApplication());
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ApplicationsAdd(
-                              productsActions: _productsActions,
                               bottomAppBarBloc: bottomAppBarBloc,
                               applicationsBloc: _applicationsBloc,
+                              applicationActionsBloc: _applicationActionsBloc,
                             )));
                   },
                 );
@@ -152,7 +160,9 @@ class _Home2State extends State<Home2Page> {
             blocProviders: [
               BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc),
               BlocProvider<ThemeBloc>(bloc: _themeBloc),
-              BlocProvider<ApplicationsBloc>(bloc: _applicationsBloc)
+              BlocProvider<ApplicationsBloc>(bloc: _applicationsBloc),
+              BlocProvider<ApplicationActionsBloc>(
+                  bloc: _applicationActionsBloc)
             ],
             child: BlocBuilder(
               bloc: _themeBloc,

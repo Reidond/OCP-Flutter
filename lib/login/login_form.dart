@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:open_copyright_platform/auth/index.dart';
 import 'package:open_copyright_platform/login/index.dart';
 
@@ -45,8 +44,8 @@ class _LoginFormState extends State<LoginForm> {
             });
           }
 
-          // _emailController.text = 'customer1@test.com';
-          // _passwordController.text = 'customer123';
+          _emailController.text = 'customer1@test.com';
+          _passwordController.text = 'customer123';
 
           return Form(
             child: ListView(

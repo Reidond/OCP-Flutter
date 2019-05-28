@@ -21,17 +21,17 @@ class ProductCardState extends State<ProductCard> {
 
   Widget get productCard {
     return Card(
-      margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 0.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-          ListTile(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ListTile(
             onTap: () {
-              BlocProvider.of<ProductsBloc>(context).dispatch(Show(id: product.id));
+              BlocProvider.of<ProductsBloc>(context)
+                  .dispatch(Show(id: product.id));
             },
-            leading: Icon(ProductType.getCorrespondingImageType(product.productType)),
-            title: Text(product.name,
-                style: TextStyle(fontSize: 16.0)),
+            leading: Icon(
+                ProductType.getCorrespondingImageType(product.productType)),
+            title: Text(product.name, style: TextStyle(fontSize: 16.0)),
             subtitle: Text(product.description),
             dense: true)
       ],

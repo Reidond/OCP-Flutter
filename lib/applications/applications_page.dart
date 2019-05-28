@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_copyright_platform/application_actions/index.dart';
 import 'package:open_copyright_platform/applications/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:open_copyright_platform/settings/index.dart';
@@ -32,6 +33,9 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
     final ApplicationsBloc applicationsBloc =
         BlocProvider.of<ApplicationsBloc>(context);
 
+    final ApplicationActionsBloc applicationActionsBloc =
+        BlocProvider.of<ApplicationActionsBloc>(context);
+
     final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
 
     bottomAppBarBloc.dispatch(ShowAddApplicationsFAB());
@@ -41,7 +45,8 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
     return BlocProviderTree(
         blocProviders: [
           BlocProvider<ApplicationsBloc>(bloc: applicationsBloc),
-          BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc)
+          BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc),
+          BlocProvider<ApplicationActionsBloc>(bloc: applicationActionsBloc),
         ],
         child: BlocBuilder(
           bloc: _themeBloc,
