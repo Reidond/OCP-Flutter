@@ -1,17 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-abstract class ProductsEvent extends Equatable {}
-
-class InitialProductsEvent extends ProductsEvent {
-  @override
-  String toString() {
-    return 'InitialProductsEvent';
-  }
-}
-
-class Fetch extends ProductsEvent {
-  @override
-  String toString() {
-    return 'Fetch';
-  }
+abstract class ProductsEvent extends Equatable {
+  ProductsEvent([List props = const []]) : super(props);
 }

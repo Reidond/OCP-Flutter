@@ -5,12 +5,3 @@ import 'package:meta/meta.dart';
 abstract class BottomAppBarState extends Equatable {
   BottomAppBarState([List props = const []]) : super(props);
 }
-
-class InitialBottomAppBarState extends BottomAppBarState {}
-
-class ProductsPageState extends BottomAppBarState {
-  @override
-  String toString() {
-    return 'ProductsPageState';
-  }
-}

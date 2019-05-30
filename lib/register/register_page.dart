@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
-import 'package:open_copyright_platform/authentication/index.dart';
+import 'package:open_copyright_platform/auth/index.dart';
 import 'package:open_copyright_platform/register/index.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -21,16 +21,16 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   RegisterBloc _registerBloc;
-  AuthenticationBloc _authenticationBloc;
+  AuthBloc _authBloc;
 
   UserRepository get _userRepository => widget.userRepository;
 
   @override
   void initState() {
-    _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    _authBloc = BlocProvider.of<AuthBloc>(context);
     _registerBloc = RegisterBloc(
       userRepository: _userRepository,
-      authenticationBloc: _authenticationBloc,
+      authBloc: _authBloc,
     );
     super.initState();
   }
@@ -39,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RegisterForm(
-        authenticationBloc: _authenticationBloc,
+        authBloc: _authBloc,
         registerBloc: _registerBloc,
       ),
     );

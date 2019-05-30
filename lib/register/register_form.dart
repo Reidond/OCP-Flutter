@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:open_copyright_platform/authentication/index.dart';
-import 'package:open_copyright_platform/login/index.dart';
+import 'package:open_copyright_platform/auth/index.dart';
 import 'package:open_copyright_platform/register/index.dart';
 
 class RegisterForm extends StatefulWidget {
   final RegisterBloc registerBloc;
-  final AuthenticationBloc authenticationBloc;
+  final AuthBloc authBloc;
 
   RegisterForm({
     Key key,
     @required this.registerBloc,
-    @required this.authenticationBloc,
+    @required this.authBloc,
   }) : super(key: key);
 
   @override
@@ -58,7 +57,6 @@ class _RegisterFormState extends State<RegisterForm> {
                 SizedBox(height: 80.0),
                 Column(
                   children: <Widget>[
-                    // TODO: Make this check better
                     Theme.of(context).backgroundColor ==
                             ThemeData.light().backgroundColor
                         ? Image.asset('assets/logo.png')

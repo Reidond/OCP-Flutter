@@ -1,27 +1,25 @@
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:open_copyright_platform/authentication/index.dart';
+import 'package:open_copyright_platform/auth/index.dart';
 import 'package:open_copyright_platform/login/index.dart';
-import 'package:open_copyright_platform/register/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
-  final AuthenticationBloc authenticationBloc;
+  final AuthBloc authBloc;
 
   LoginBloc({
     @required this.userRepository,
-    @required this.authenticationBloc,
+    @required this.authBloc,
   })  : assert(userRepository != null),
-        assert(authenticationBloc != null);
+        assert(authBloc != null);
 
   @override
   LoginState get initialState => LoginInitial();
 
   @override
-  Stream<LoginState> mapEventToState(
-      LoginState currentState, LoginEvent event) async* {
+  Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is LoginButtonPressed) {
       yield LoginLoading();
 
@@ -31,7 +29,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           password: event.password,
         );
 
-        authenticationBloc.dispatch(LoggedIn(user: user));
+        authBloc.dispatch(LoggedIn(user: user));
         yield LoginInitial();
       } catch (error) {
         yield LoginFailure(error: error.toString());
@@ -39,7 +37,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
     if (event is LoginRegisterButtonPressed) {
       yield LoginLoading();
-      authenticationBloc.dispatch(RegisterButtonPress());
+      authBloc.dispatch(RegisterButtonPress());
     }
   }
 }

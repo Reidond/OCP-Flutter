@@ -8,8 +8,7 @@ class DashBoardBloc extends Bloc<DashBoardEvent, DashBoardState> {
 
   @override
   Stream<DashBoardState> mapEventToState(
-    DashBoardState currentState,
-    DashBoardEvent event,
+    DashBoardEvent event
   ) async* {
     if (event is InitialDashBoard) {
       yield InitialDashBoardState();

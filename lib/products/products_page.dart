@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
-import 'package:rails_api_connection/rails_api_connection.dart';
-
 import 'package:open_copyright_platform/products/index.dart';
-
-import 'package:open_copyright_platform/common/index.dart';
+import 'package:open_copyright_platform/settings/index.dart';
+import 'package:rails_api_connection/rails_api_connection.dart';
 
 class ProductsPage extends StatefulWidget {
   final ProductsActions productsActions;
@@ -25,7 +22,6 @@ class _ProductsPageState extends State<ProductsPage> {
   ProductsActions get _productsActions => widget.productsActions;
 
   ProductsBloc _productsBloc;
-  final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -40,31 +36,28 @@ class _ProductsPageState extends State<ProductsPage> {
     final BottomAppBarBloc bottomAppBarBloc =
         BlocProvider.of<BottomAppBarBloc>(context);
 
-    bottomAppBarBloc.dispatch(BottomAppBarAddProducts());
+    final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
 
-    return BlocBuilder(
-      bloc: _productsBloc,
-      builder: (BuildContext context, ProductsState state) {
-        if (state is ProductsUninitialized) {
-          return Center(child: CircularProgressIndicator());
-        }
-        if (state is ProductsError) {
-          return Center(child: Text('Failed to fetch products'));
-        }
-        if (state is ProductsLoaded) {
-          if (state.products.isEmpty) {
-            return Center(child: Text('No posts'));
-          }
-          return ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return ProductCard(state.products[index]);
-            },
-            itemCount: state.products.length,
-            controller: _scrollController,
-          );
-        }
-      },
-    );
+    bottomAppBarBloc.dispatch(ShowAddProductsFAB());
+
+    return BlocProviderTree(
+        blocProviders: [
+          BlocProvider<ProductsBloc>(bloc: _productsBloc),
+          BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc)
+        ],
+        child: BlocBuilder(
+          bloc: _themeBloc,
+          builder: (_, ThemeData theme) {
+            return MaterialApp(
+              theme: theme,
+              routes: {
+                '/': (context) => ProductsList(),
+                '/product_show': (context) => ProductsShow(),
+              },
+              initialRoute: '/',
+            );
+          },
+        ));
   }
 
   @override

@@ -1,26 +1,25 @@
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:open_copyright_platform/authentication/index.dart';
+import 'package:open_copyright_platform/auth/index.dart';
 import 'package:open_copyright_platform/register/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final UserRepository userRepository;
-  final AuthenticationBloc authenticationBloc;
+  final AuthBloc authBloc;
 
   RegisterBloc({
     @required this.userRepository,
-    @required this.authenticationBloc,
+    @required this.authBloc,
   })  : assert(userRepository != null),
-        assert(authenticationBloc != null);
+        assert(authBloc != null);
 
   @override
   RegisterState get initialState => RegisterInitial();
 
   @override
-  Stream<RegisterState> mapEventToState(
-      RegisterState currentState, RegisterEvent event) async* {
+  Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
     if (event is RegisterButtonPressed) {
       yield RegisterLoading();
 
@@ -30,7 +29,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
             password: event.password,
             passwordConfirmation: event.passwordConfirmation);
 
-        authenticationBloc.dispatch(RegisteredIn(user: user));
+        authBloc.dispatch(RegisteredIn(user: user));
         yield RegisterInitial();
       } catch (error) {
         yield RegisterFailure(error: error.toString());
@@ -38,7 +37,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     }
     if (event is RegisterLoginButtonPressed) {
       yield RegisterLoading();
-      authenticationBloc.dispatch(LoginButtonPress());
+      authBloc.dispatch(LoginButtonPress());
     }
   }
 }

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_copyright_platform/auth/index.dart';
+import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:open_copyright_platform/dashboard/index.dart';
 import 'package:open_copyright_platform/home2/index.dart';
-
-import '../authentication/index.dart';
-
-import '../bottom_app_bar/index.dart';
-
-import '../products/index.dart';
+import 'package:open_copyright_platform/settings/index.dart';
 
 class DashBoardPage extends StatefulWidget {
   @override
@@ -44,30 +41,35 @@ class _DashBoardState extends State<DashBoardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationBloc authenticationBloc =
-        BlocProvider.of<AuthenticationBloc>(context);
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
+
+    final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
 
     GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
 
     return new Scaffold(
         key: _scaffoldKey,
         body: BlocProviderTree(
-          blocProviders: [
-            BlocProvider<Home2Bloc>(bloc: _home2bloc),
-            BlocProvider<AuthenticationBloc>(bloc: authenticationBloc),
-            BlocProvider<BottomAppBarBloc>(bloc: _bottomAppBarBloc)
-          ],
-          child: MaterialApp(
-            title: 'Open Copyright Platform',
-            home: BlocBuilder<DashBoardEvent, DashBoardState>(
-              bloc: _dashBoardBloc,
-              builder: (BuildContext context, DashBoardState state) {
-                if (state is InitialDashBoardState) {
-                  return Home2Page();
-                }
-              },
-            ),
-          ),
-        ));
+            blocProviders: [
+              BlocProvider<Home2Bloc>(bloc: _home2bloc),
+              BlocProvider<AuthBloc>(bloc: authBloc),
+              BlocProvider<BottomAppBarBloc>(bloc: _bottomAppBarBloc),
+              BlocProvider<ThemeBloc>(bloc: _themeBloc)
+            ],
+            child: BlocBuilder(
+                bloc: _themeBloc,
+                builder: (_, ThemeData theme) {
+                  return MaterialApp(
+                    theme: theme,
+                    home: BlocBuilder<DashBoardEvent, DashBoardState>(
+                      bloc: _dashBoardBloc,
+                      builder: (BuildContext context, DashBoardState state) {
+                        if (state is InitialDashBoardState) {
+                          return Home2Page();
+                        }
+                      },
+                    ),
+                  );
+                })));
   }
 }
