@@ -38,7 +38,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
     final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
 
-    bottomAppBarBloc.dispatch(ShowAddProductsFAB());
+    //bottomAppBarBloc.dispatch(ShowAddProductsFAB());
 
     return BlocProviderTree(
         blocProviders: [

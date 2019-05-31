@@ -91,12 +91,12 @@ class _Home2State extends State<Home2Page> {
                   Navigator.pop(context);
                 },
               ),
-              ListTile(
-                title: Text('Profile'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+              // ListTile(
+              //   title: Text('Profile'),
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
             ],
           ),
         ),

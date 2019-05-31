@@ -19,7 +19,7 @@ class ApplicationsBloc extends Bloc<ApplicationsEvent, ApplicationsState> {
 
   @override
   void dispose() {
-    applicationActionsBlocSubscription.cancel();
+    //applicationActionsBlocSubscription.cancel();
     super.dispose();
   }
 

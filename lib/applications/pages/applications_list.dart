@@ -61,28 +61,17 @@ class _ApplicationListState extends State<ApplicationList> {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                return Slidable(
-                  actionPane: SlidableDrawerActionPane(),
-                  actionExtentRatio: 0.25,
+                return Dismissible(
+                  key: Key(state.applications[index].id.toString()),
+                  background: Container(color: Colors.red),
+                  onDismissed: (direction) {
+                    BlocProvider.of<ApplicationsBloc>(context).dispatch(
+                        DeleteApplication(id: state.applications[index].id));
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            "${state.applications[index].title} dismissed")));
+                  },
                   child: ApplicationCard(state.applications[index]),
-                  secondaryActions: <Widget>[
-                    IconSlideAction(
-                      caption: 'Edit',
-                      color: Colors.orange,
-                      icon: Icons.edit,
-                      onTap: () => {},
-                    ),
-                    IconSlideAction(
-                      caption: 'Delete',
-                      color: Colors.red,
-                      icon: Icons.delete,
-                      onTap: () {
-                        BlocProvider.of<ApplicationsBloc>(context).dispatch(
-                            DeleteApplication(
-                                id: state.applications[index].id));
-                      },
-                    ),
-                  ],
                 );
               },
               itemCount: state.applications.length,
