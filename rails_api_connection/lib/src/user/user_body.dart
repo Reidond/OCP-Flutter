@@ -4,7 +4,7 @@ class UserBody {
   final String provider;
   final String uid;
   final bool allowPasswordChange;
-  final String belongTo;
+  final belongTo;
   final bool isAdmin;
   final bool isExecutor;
   final bool isSecretary;
@@ -22,15 +22,15 @@ class UserBody {
 
   factory UserBody.fromJson(Map<String, dynamic> json) {
     return UserBody(
-        id: json['id'],
-        email: json['email'],
-        provider: json['provider'],
-        uid: json['uid'],
-        allowPasswordChange: json['allow_password_change'],
-        belongTo: json['belong_to'],
-        isAdmin: json['is_admin'],
-        isExecutor: json['is_executor'],
-        isSecretary: json['is_secretary']);
+        id: json['data']['id'],
+        email: json['data']['email'],
+        provider: json['data']['provider'],
+        uid: json['data']['uid'],
+        allowPasswordChange: json['data']['allow_password_change'],
+        belongTo: json['data']['belong_to'],
+        isAdmin: json['data']['is_admin'],
+        isExecutor: json['data']['is_executor'],
+        isSecretary: json['data']['is_secretary']);
   }
 
   Map toMap() {
