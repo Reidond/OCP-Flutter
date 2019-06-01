@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
-
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:open_copyright_platform/auth/index.dart';
+import 'package:open_copyright_platform/common/index.dart';
+import 'package:open_copyright_platform/dashboard/index.dart';
+import 'package:open_copyright_platform/login/index.dart';
 import 'package:open_copyright_platform/register/index.dart';
 import 'package:open_copyright_platform/settings/index.dart';
 import 'package:open_copyright_platform/splash/index.dart';
-import 'package:open_copyright_platform/login/index.dart';
-import 'package:open_copyright_platform/dashboard/index.dart';
-import 'package:open_copyright_platform/common/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
@@ -79,6 +77,9 @@ class _AppState extends State<App> {
                       return SplashPage();
                     }
                     if (state is AuthAuthenticated) {
+                      return DashBoardPage();
+                    }
+                    if (state is AuthAsExecutor) {
                       return DashBoardPage();
                     }
                     if (state is AuthUnauthenticated) {
