@@ -52,6 +52,10 @@ class ApplicationsBloc extends Bloc<ApplicationsEvent, ApplicationsState> {
           final applications = await applicationActions.fetchApplications();
           yield ApplicationsLoaded(applications: applications);
         }
+        if (currentState is ShowQuickSearch) {
+          final applications = await applicationActions.fetchApplications();
+          yield ApplicationsLoaded(applications: applications);
+        }
       } catch (_) {
         yield ApplicationsError();
       }
@@ -81,6 +85,11 @@ class ApplicationsBloc extends Bloc<ApplicationsEvent, ApplicationsState> {
       } else {
         yield ApplicationsError();
       }
+    }
+    if (event is WantToSearch) {
+      final String urlToShow =
+          await applicationActions.quickSearch(event.productId);
+      yield ShowQuickSearch(url: urlToShow);
     }
   }
 }

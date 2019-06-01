@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:open_copyright_platform/application_actions/index.dart';
 import 'package:open_copyright_platform/applications/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
@@ -41,6 +40,9 @@ class _ApplicationListState extends State<ApplicationList> {
       listener: (BuildContext context, ApplicationsState state) {
         if (state is ApplicationShowed) {
           Navigator.of(context).pushNamed('/application_show');
+        }
+        if (state is ShowQuickSearch) {
+          Navigator.of(context).pushNamed('/application_quick_search');
         }
       },
       child: BlocBuilder(

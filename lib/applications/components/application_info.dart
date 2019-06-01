@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/application_actions/index.dart';
 import 'package:open_copyright_platform/applications/index.dart';
+import 'package:open_copyright_platform/auth/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
@@ -46,6 +47,8 @@ class ApplicationInfoState extends State<ApplicationInfo> {
 
     final ApplicationsBloc applicationsBloc =
         BlocProvider.of<ApplicationsBloc>(context);
+
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
 
     return Container(
         child: Scaffold(
@@ -119,22 +122,45 @@ class ApplicationInfoState extends State<ApplicationInfo> {
                 )
               ]),
               ButtonTheme.bar(
-                child: BlocBuilder(
-                  bloc: _applicationActionsBloc,
-                  builder:
-                      (BuildContext context, ApplicationActionsState state) {
-                    if (state is ApplicationStatusChanged) {
-                      return ButtonBar(
-                        children: <Widget>[_statusButton(state.currentStatus)],
-                      );
-                    } else {
-                      return ButtonBar(
-                        children: <Widget>[_statusButton(application.status)],
-                      );
-                    }
-                  },
-                ),
-              ),
+                  child: Wrap(
+                children: <Widget>[
+                  BlocBuilder(
+                    bloc: _applicationActionsBloc,
+                    builder:
+                        (BuildContext context, ApplicationActionsState state) {
+                      if (state is ApplicationStatusChanged) {
+                        return ButtonBar(
+                          children: <Widget>[
+                            _statusButton(state.currentStatus)
+                          ],
+                        );
+                      } else {
+                        return ButtonBar(
+                          children: <Widget>[_statusButton(application.status)],
+                        );
+                      }
+                    },
+                  ),
+                  BlocBuilder(
+                    bloc: authBloc,
+                    builder: (BuildContext context, AuthState state) {
+                      if (state is AuthAsExecutor) {
+                        return FlatButton(
+                          child: Text('Search'),
+                          onPressed: () {
+//                            Scaffold.of(context).showSnackBar(
+//                                SnackBar(content: Text("Not implemented")));
+                            applicationsBloc.dispatch(
+                                WantToSearch(productId: application.productId));
+                          },
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  )
+                ],
+              )),
             ],
           ),
         ),
