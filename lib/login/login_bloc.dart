@@ -28,8 +28,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           email: event.email,
           password: event.password,
         );
-
-        authBloc.dispatch(LoggedIn(user: user));
+        if (user.userBody.isExecutor) {
+          authBloc.dispatch(AsExecutor(user: user));
+        } else {
+          authBloc.dispatch(LoggedIn(user: user));
+        }
         yield LoginInitial();
       } catch (error) {
         yield LoginFailure(error: error.toString());

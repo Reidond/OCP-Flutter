@@ -77,11 +77,20 @@ class _Home2State extends State<Home2Page> {
                       : Colors.black12,
                 ),
               ),
-              ListTile(
-                title: Text('Products'),
-                onTap: () {
-                  home2Bloc.dispatch(ProductsDrawerButtonPressed());
-                  Navigator.pop(context);
+              BlocBuilder(
+                bloc: authBloc,
+                builder: (BuildContext context, AuthState state) {
+                  if (state is AuthAsExecutor) {
+                    return Container();
+                  } else {
+                    return ListTile(
+                      title: Text('Products'),
+                      onTap: () {
+                        home2Bloc.dispatch(ProductsDrawerButtonPressed());
+                        Navigator.pop(context);
+                      },
+                    );
+                  }
                 },
               ),
               ListTile(
@@ -162,7 +171,8 @@ class _Home2State extends State<Home2Page> {
               BlocProvider<ThemeBloc>(bloc: _themeBloc),
               BlocProvider<ApplicationsBloc>(bloc: _applicationsBloc),
               BlocProvider<ApplicationActionsBloc>(
-                  bloc: _applicationActionsBloc)
+                  bloc: _applicationActionsBloc),
+              BlocProvider<AuthBloc>(bloc: authBloc),
             ],
             child: BlocBuilder(
               bloc: _themeBloc,
