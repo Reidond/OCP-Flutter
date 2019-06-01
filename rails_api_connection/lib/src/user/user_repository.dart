@@ -71,6 +71,11 @@ class UserRepository {
     return;
   }
 
+  Future<void> persistExecutor(bool isExecutor) async {
+    await storage.write(key: 'isExecutor', value: isExecutor.toString());
+    return;
+  }
+
   Future<void> persistHeaders(User user) async {
     await storage.write(key: 'client', value: user.userHeaders.client);
     await storage.write(key: 'expiry', value: user.userHeaders.expiry);
@@ -85,6 +90,14 @@ class UserRepository {
     Map<String, String> userHeadersFromStorage =
         await StorageHeaders.getHeadersFromStorage();
     if (userHeadersFromStorage.values.contains(null)) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> isExecutor() async {
+    final isEmpty = await storage.read(key: 'isExecutor');
+    if (isEmpty == null) {
       return false;
     }
     return true;

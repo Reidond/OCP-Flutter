@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/application_actions/index.dart';
 import 'package:open_copyright_platform/applications/index.dart';
+import 'package:open_copyright_platform/auth/index.dart';
 import 'package:open_copyright_platform/bottom_app_bar/index.dart';
 import 'package:open_copyright_platform/settings/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
@@ -36,6 +37,8 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
     final ApplicationActionsBloc applicationActionsBloc =
         BlocProvider.of<ApplicationActionsBloc>(context);
 
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
+
     final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
 
     bottomAppBarBloc.dispatch(ShowAddApplicationsFAB());
@@ -47,6 +50,7 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
           BlocProvider<ApplicationsBloc>(bloc: applicationsBloc),
           BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc),
           BlocProvider<ApplicationActionsBloc>(bloc: applicationActionsBloc),
+          BlocProvider<AuthBloc>(bloc: authBloc),
         ],
         child: BlocBuilder(
           bloc: _themeBloc,
@@ -55,7 +59,9 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
               theme: theme,
               routes: {
                 '/': (context) => ApplicationList(),
-                '/application_show': (context) => ApplicationsShow()
+                '/application_show': (context) => ApplicationsShow(),
+                '/application_quick_search': (context) =>
+                    ApplicationsQuickSearch()
               },
               initialRoute: '/',
             );

@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:meta/meta.dart';
+
 import 'package:bloc/bloc.dart';
+import 'package:meta/meta.dart';
 import 'package:open_copyright_platform/auth/index.dart';
 import 'package:rails_api_connection/rails_api_connection.dart';
 
@@ -16,9 +17,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
     if (event is AppStarted) {
       final bool hasHeaders = await userRepository.hasHeaders();
+      final bool isExecutor = await userRepository.isExecutor();
 
       if (hasHeaders) {
-        yield AuthAuthenticated();
+        if (isExecutor) {
+          yield AuthAsExecutor(isExecutor: true);
+        } else {
+          yield AuthAuthenticated();
+        }
       } else {
         yield AuthUnauthenticated();
       }
@@ -28,6 +34,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield AuthLoading();
       await userRepository.persistHeaders(event.user);
       yield AuthAuthenticated();
+    }
+
+    if (event is AsExecutor) {
+      yield AuthLoading();
+      await userRepository.persistHeaders(event.user);
+      await userRepository.persistExecutor(event.user.userBody.isExecutor);
+      yield AuthAsExecutor(isExecutor: event.user.userBody.isExecutor);
     }
 
     if (event is LoggedOut) {

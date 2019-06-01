@@ -36,6 +36,10 @@ ThemeData _buildDarkTheme() {
     primaryColorLight: kSecondaryColor,
     buttonColor: kPrimaryColor,
     indicatorColor: Colors.white,
+    appBarTheme: AppBarTheme(
+        color: const Color(0xFF202124),
+        brightness: Brightness.dark,
+        elevation: 0.0),
     toggleableActiveColor: const Color(0xFF6997DF),
     accentColor: kSecondaryColor,
     canvasColor: const Color(0xFF202124),

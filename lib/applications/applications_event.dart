@@ -15,3 +15,14 @@ class DeleteApplication extends ApplicationsEvent {
     return 'DeleteApplication { $id }';
   }
 }
+
+class WantToSearch extends ApplicationsEvent {
+  final int productId;
+
+  WantToSearch({@required this.productId}) : super([productId]);
+
+  @override
+  String toString() {
+    return 'WantToSearch { $productId }';
+  }
+}

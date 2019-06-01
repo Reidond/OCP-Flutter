@@ -11,6 +11,8 @@ class ApplicationActions {
   final storage = new FlutterSecureStorage();
 
   Future<List<Application>> fetchApplications() async {
+    final headers = await StorageHeaders.getHeadersFromStorage();
+
     final response = await http.get(
         '${AppConfig.API_BASE}/api/v1/copyright_applications',
         headers: await StorageHeaders.getHeadersFromStorage());
@@ -147,6 +149,30 @@ class ApplicationActions {
       }
       return json.decode(response.body)['copyright_application']['status']
           as int;
+    });
+  }
+
+  Future<String> quickSearch(int id) async {
+    var headers = await StorageHeaders.getHeadersFromStorage();
+
+    headers['content-type'] = 'application/json';
+
+    return http
+        .post(
+            '${AppConfig.API_BASE}/api/v1/copyright_applications/custom_search',
+            body: json.encode({'id': id}),
+            headers: headers)
+        .then((res) {
+      final int statusCode = res.statusCode;
+
+      if (statusCode < 200 ||
+          statusCode > 400 ||
+          json == null ||
+          json.decode(res.body)['success'] != true) {
+        throw Exception("Success failed");
+      }
+
+      return json.decode(res.body)['result'][0]['formatted_url'] as String;
     });
   }
 
