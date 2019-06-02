@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_copyright_platform/application_actions/index.dart';
@@ -166,36 +167,36 @@ class _Home2State extends State<Home2Page> {
           ),
         ),
         body: BlocProviderTree(
-            blocProviders: [
-              BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc),
-              BlocProvider<ThemeBloc>(bloc: _themeBloc),
-              BlocProvider<ApplicationsBloc>(bloc: _applicationsBloc),
-              BlocProvider<ApplicationActionsBloc>(
-                  bloc: _applicationActionsBloc),
-              BlocProvider<AuthBloc>(bloc: authBloc),
-            ],
-            child: BlocBuilder(
-              bloc: _themeBloc,
-              builder: (_, ThemeData theme) {
-                return MaterialApp(
-                  theme: theme,
-                  home: BlocBuilder<Home2Event, Home2State>(
-                    bloc: home2Bloc,
-                    builder: (BuildContext context, Home2State state) {
-                      if (state is InitialHome2State) {
-                        return Container(child: Center(child: Text("Henlo")));
-                      }
-                      if (state is ProductsDrawerButton) {
-                        return ProductsPage(productsActions: _productsActions);
-                      }
-                      if (state is ApplicationsDrawerButton) {
-                        return ApplicationsPage(
-                            applicationActions: _applicationActions);
-                      }
-                    },
-                  ),
-                );
-              },
-            )));
+          blocProviders: [
+            BlocProvider<BottomAppBarBloc>(bloc: bottomAppBarBloc),
+            BlocProvider<ThemeBloc>(bloc: _themeBloc),
+            BlocProvider<ApplicationsBloc>(bloc: _applicationsBloc),
+            BlocProvider<ApplicationActionsBloc>(bloc: _applicationActionsBloc),
+            BlocProvider<AuthBloc>(bloc: authBloc),
+          ],
+          child: BlocBuilder(
+            bloc: _themeBloc,
+            builder: (_, ThemeData theme) {
+              return MaterialApp(
+                theme: theme,
+                home: BlocBuilder<Home2Event, Home2State>(
+                  bloc: home2Bloc,
+                  builder: (BuildContext context, Home2State state) {
+                    if (state is InitialHome2State) {
+                      return Container(child: Center(child: Text("Henlo")));
+                    }
+                    if (state is ProductsDrawerButton) {
+                      return ProductsPage(productsActions: _productsActions);
+                    }
+                    if (state is ApplicationsDrawerButton) {
+                      return ApplicationsPage(
+                          applicationActions: _applicationActions);
+                    }
+                  },
+                ),
+              );
+            },
+          ),
+        ));
   }
 }
