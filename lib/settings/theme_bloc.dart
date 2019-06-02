@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:open_copyright_platform/settings/theme/theme.dart';
+import 'package:open_copyright_platform/settings/themes/dark/theme.dart';
+import 'package:open_copyright_platform/settings/themes/light/theme.dart';
 
 enum ThemeEvent { toggle }
 
